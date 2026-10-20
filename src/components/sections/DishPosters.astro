@@ -1,0 +1,136 @@
+---
+import { localePath, type Locale } from '../../i18n/index.ts';
+import { availableToday, seasonDaysLeft, type Dish } from '../../utils/content.ts';
+import { Image } from 'astro:assets';
+import { asset, ANCHOS, SIZES, CALIDAD } from '../../utils/images.ts';
+
+interface Props { dishes: Dish[]; t: any; locale: Locale; }
+const { dishes, t, locale } = Astro.props;
+---
+
+<div class="posters">
+  {dishes.map((d, i) => {
+    const today = availableToday(d);
+    const left = seasonDaysLeft(d);
+    return (
+      <article class:list={['poster', { 'is-off': !today }]}>
+        <a class="poster-shot" href={localePath(`/carta/${d.slug}`, locale)} tabindex="-1" aria-hidden="true">
+          <Image
+            src={asset(d.img)}
+            widths={[...ANCHOS.poster]}
+            sizes={SIZES.poster}
+            quality={CALIDAD}
+            alt=""
+            loading="lazy" decoding="async"
+          />
+          <span class="poster-vignette"></span>
+          <span class="poster-no">№{d.no}</span>
+          {!today && <span class="poster-off">{t.carta.notToday}</span>}
+        </a>
+
+        <div class="poster-body">
+          <div>
+            <h3 class:list={['poster-name', { 'is-alt': i % 2 === 1 }]}>
+              <a href={localePath(`/carta/${d.slug}`, locale)}>{d.name}</a>
+            </h3>
+            <p class="poster-ing serif-it">{d.ingredients}</p>
+
+            {(left !== null && left <= 21) && (
+              <p class="poster-season">
+                {left === 0 ? t.carta.seasonLast : t.carta.seasonEnding.replace('{n}', String(left))}
+              </p>
+            )}
+          </div>
+
+          <div class="poster-foot">
+            <span>{d.line}</span>
+            <span class="poster-price">{d.price}</span>
+          </div>
+        </div>
+      </article>
+    );
+  })}
+</div>
+
+<style is:global>
+  .posters { background: var(--bg); }
+
+  .poster {
+    display: grid;
+    grid-template-columns: minmax(260px, 36vw) 1fr;
+    border-bottom: var(--rule);
+  }
+
+  .poster-shot {
+    position: relative; display: block;
+    aspect-ratio: 1 / 1; overflow: hidden; background: var(--ink);
+  }
+  .poster-shot img {
+    width: 100%; height: 100%; object-fit: cover;
+    filter: grayscale(1) contrast(1.5) sepia(0.35) hue-rotate(-25deg) saturate(2.2);
+    transition: transform 0.6s ease;
+  }
+  .poster:hover .poster-shot img { transform: scale(1.03); }
+
+  .poster-vignette {
+    position: absolute; inset: 0; opacity: 0.9;
+    background: radial-gradient(circle at 50% 50%, transparent 26%, var(--ink) 88%);
+  }
+  .poster-no {
+    position: absolute; top: 16px; left: 16px;
+    color: var(--paper); font-size: 11px; letter-spacing: 0.3em;
+  }
+  .poster-off {
+    position: absolute; bottom: 16px; left: 16px;
+    border: 2px solid var(--red-dark); color: var(--red-dark);
+    padding: 5px 14px; font-size: 11px; letter-spacing: 0.24em;
+    text-transform: uppercase; transform: rotate(-6deg);
+  }
+
+  .poster-body {
+    padding: clamp(28px, 4vw, 44px) var(--pad) clamp(24px, 3vw, 34px);
+    display: flex; flex-direction: column; justify-content: space-between;
+    gap: 28px;
+  }
+
+  .poster-name {
+    font-family: var(--display);
+    font-size: clamp(42px, 9vw, 180px);
+    line-height: 0.82; letter-spacing: -0.015em;
+    text-transform: uppercase;
+    color: var(--ink);
+  }
+  /* Alterna tinta y rojo para romper la retícula */
+  .poster-name.is-alt { color: var(--red); }
+  .poster-name a:hover { color: var(--red); }
+
+  .poster-ing {
+    margin-top: 22px; max-width: 44ch;
+    font-size: clamp(16px, 1.5vw, 25px); line-height: 1.55;
+  }
+
+  .poster-season {
+    margin-top: 18px; display: inline-block;
+    background: var(--yellow); color: var(--ink);
+    padding: 5px 13px; font-size: 11px;
+    letter-spacing: 0.22em; text-transform: uppercase;
+  }
+
+  .poster-foot {
+    display: flex; justify-content: space-between; align-items: flex-end;
+    gap: 16px; font-size: 11px; letter-spacing: 0.24em; text-transform: uppercase;
+  }
+  .poster-price { font-size: 15px; }
+
+  .poster.is-off .poster-shot img { filter: grayscale(1) contrast(1.2) brightness(0.65); }
+  .poster.is-off .poster-name,
+  .poster.is-off .poster-ing { opacity: var(--dim); }
+  /* El rojo atenuado no llega a 4.5:1 ni al 84% de opacidad.
+     En estado apagado el nombre vuelve a tinta. */
+  .poster.is-off .poster-name.is-alt { color: var(--ink); }
+
+  @media (max-width: 760px) {
+    .poster { grid-template-columns: 1fr; }
+    .poster-shot { aspect-ratio: 4 / 3; }
+  }
+</style>

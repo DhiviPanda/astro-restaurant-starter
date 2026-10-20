@@ -1,0 +1,399 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import TopBar from './layout/TopBar.astro';
+import Credits from './layout/Credits.astro';
+import CookieBanner from './ui/CookieBanner.astro';
+import { getContent, availableToday, seasonDaysLeft } from '../utils/content.ts';
+import { localePath, type Locale } from '../i18n/index.ts';
+
+interface Props { locale: Locale; }
+const { locale } = Astro.props;
+
+const { t, dishes, producers } = await getContent(locale);
+
+// Todos los alergenos que aparecen realmente en la carta
+const allergenKeys = [...new Set(dishes.flatMap((d) => d.allergens))].sort();
+
+const categories = ['carnes', 'verdes', 'acompanantes'] as const;
+
+// Los datos que la isla necesita en cliente, serializados una sola vez
+const clientDishes = dishes.map((d) => ({
+  slug: d.slug,
+  allergens: d.allergens,
+  days: d.days,
+  service: d.service,
+  season: d.season,
+}));
+---
+
+<BaseLayout
+  title={`${t.carta.title} — ${t.site.name}`}
+  description={t.site.description}
+>
+  <TopBar t={t} locale={locale} />
+
+  <main class="menu" data-dishes={JSON.stringify(clientDishes)}>
+    <header class="menu-head">
+      <p class="menu-table label" id="menu-table" hidden>
+        <span data-label={t.carta.table}></span>
+      </p>
+      <h1 class="menu-title">{t.carta.title}</h1>
+      <p class="menu-service label" id="menu-service"
+         data-mediodia={t.carta.mediodia}
+         data-noche={t.carta.noche}
+         data-allday={t.carta.allDay}
+         data-now={t.carta.serviceNow}></p>
+    </header>
+
+    <!-- Lo de siempre: se rellena desde localStorage -->
+    <section class="usual" id="usual" hidden>
+      <p class="usual-label label">{t.carta.usual}</p>
+      <a class="usual-link" id="usual-link" href="#"></a>
+      <p class="usual-body serif-it">{t.carta.usualBody}</p>
+    </section>
+
+    <!-- Filtros de alergenos: la unica isla con JS real -->
+    <section class="filters" aria-labelledby="filters-title">
+      <h2 id="filters-title" class="filters-title">{t.carta.filterLabel}</h2>
+      <p class="filters-help">{t.carta.filterHelp}</p>
+
+      <div class="filters-grid" role="group" aria-labelledby="filters-title">
+        {allergenKeys.map((key) => (
+          <label class="chip">
+            <input type="checkbox" value={key} class="chip-input" />
+            <span class="chip-face">{t.allergens[key] ?? key}</span>
+          </label>
+        ))}
+      </div>
+
+      <div class="filters-foot">
+        <button type="button" id="clear-filters" class="filters-clear" hidden>
+          {t.carta.clearFilters}
+        </button>
+        <p class="filters-count" id="filters-count" role="status" aria-live="polite"
+           data-hidden={t.carta.hidden}></p>
+      </div>
+    </section>
+
+    {categories.map((cat) => {
+      const list = dishes.filter((d) => d.category === cat);
+      if (!list.length) return null;
+      return (
+        <section class="menu-group" data-group={cat}>
+          <h2 class="menu-group-title">{t.carta.categories[cat]}</h2>
+          <ul class="menu-list">
+            {list.map((d) => {
+              const today = availableToday(d);
+              const left = seasonDaysLeft(d);
+              return (
+                <li class:list={['item', { 'is-off': !today }]} data-slug={d.slug}>
+                  <a class="item-link" href={localePath(`/carta/${d.slug}`, locale)}>
+                    <span class="item-no">№{d.no}</span>
+
+                    <span class="item-main">
+                      <span class="item-name">{d.name}</span>
+                      <span class="item-ing serif-it">{d.ingredients}</span>
+
+                      <span class="item-tags">
+                        {d.vegan && <span class="tag tag-plain">{t.carta.vegan}</span>}
+                        {!today && <span class="tag tag-off">{t.carta.notToday}</span>}
+                        {(left !== null && left <= 21) && (
+                          <span class="tag tag-season">
+                            {left === 0 ? t.carta.seasonLast : t.carta.seasonEnding.replace('{n}', String(left))}
+                          </span>
+                        )}
+                        <span class="tag tag-safe" hidden>{t.carta.safe}</span>
+                        <span class="tag tag-contains" hidden data-prefix={t.carta.contains}></span>
+                      </span>
+                    </span>
+
+                    <span class="item-price">{d.price}</span>
+                  </a>
+                </li>
+              );
+            })}
+          </ul>
+        </section>
+      );
+    })}
+
+    <p class="menu-empty" id="menu-empty" hidden>{t.carta.empty}</p>
+  </main>
+
+  <Credits t={t} locale={locale} producers={producers} />
+  <CookieBanner />
+</BaseLayout>
+
+<style is:global>
+  .menu { padding: 0 0 clamp(60px, 9vw, 100px); }
+
+  .menu-head {
+    padding: clamp(40px, 7vw, 80px) var(--pad) clamp(24px, 4vw, 40px);
+    border-bottom: var(--rule);
+  }
+  .menu-table { color: var(--red); }
+  .menu-title {
+    font-family: var(--display);
+    font-size: clamp(56px, 14vw, 180px); line-height: 0.84;
+    text-transform: uppercase; margin-top: 8px;
+  }
+  .menu-service { margin-top: 12px; opacity: 0.78; }
+
+  /* Lo de siempre */
+  .usual {
+    background: var(--yellow); color: var(--ink);
+    padding: clamp(20px, 3vw, 28px) var(--pad);
+    border-bottom: var(--rule);
+  }
+  .usual-link {
+    display: block; font-family: var(--display);
+    font-size: clamp(28px, 5vw, 54px); line-height: 0.9;
+    text-transform: uppercase; margin-top: 6px;
+  }
+  .usual-link:hover { color: var(--red); }
+  .usual-body { font-size: 16px; margin-top: 4px; }
+
+  /* Filtros */
+  .filters {
+    padding: clamp(26px, 4vw, 40px) var(--pad);
+    border-bottom: var(--rule);
+    background: var(--bg-clean);
+  }
+  .filters-title {
+    font-family: var(--display); font-size: clamp(24px, 3.4vw, 42px);
+    line-height: 1; text-transform: uppercase;
+  }
+  .filters-help { font-size: 12px; margin-top: 6px; opacity: 0.75; letter-spacing: 0.06em; }
+
+  .filters-grid { margin-top: 18px; display: flex; flex-wrap: wrap; gap: 8px; }
+
+  .chip { display: inline-flex; }
+  .chip-input {
+    position: absolute; width: 1px; height: 1px; opacity: 0;
+    margin: 0; pointer-events: none;
+  }
+  .chip-face {
+    display: inline-block; cursor: pointer;
+    border: var(--rule); padding: 10px 16px;
+    font-size: 11px; letter-spacing: 0.18em; text-transform: uppercase;
+    transition: background 0.15s, color 0.15s;
+    min-height: 40px; display: inline-flex; align-items: center;
+  }
+  .chip-face:hover { background: var(--bg-alt); }
+  .chip-input:checked + .chip-face { background: var(--red); color: var(--paper); border-color: var(--red); }
+  .chip-input:focus-visible + .chip-face { outline: 3px solid var(--red); outline-offset: 2px; }
+
+  .filters-foot {
+    margin-top: 16px; display: flex; gap: 18px; align-items: center; flex-wrap: wrap;
+    min-height: 20px;
+  }
+  .filters-clear {
+    font-size: 11px; letter-spacing: 0.2em; text-transform: uppercase;
+    border-bottom: 1px solid var(--ink); padding-bottom: 2px;
+  }
+  .filters-clear:hover { color: var(--red); border-color: var(--red); }
+  .filters-count { font-size: 11px; letter-spacing: 0.14em; opacity: 0.75; }
+
+  /* Lista */
+  .menu-group { border-bottom: var(--rule); }
+  .menu-group[hidden] { display: none; }
+  .menu-group-title {
+    font-family: var(--display);
+    font-size: clamp(30px, 5vw, 64px); line-height: 1;
+    text-transform: uppercase;
+    padding: clamp(28px, 4vw, 44px) var(--pad) 0;
+    color: var(--red);
+  }
+  .menu-list { list-style: none; margin-top: 18px; }
+
+  .item { border-top: 1px solid rgba(10,10,10,0.12); }
+  .item:first-child { border-top: none; }
+  .item[hidden] { display: none; }
+
+  .item-link {
+    display: grid; grid-template-columns: 44px 1fr auto;
+    gap: 14px; align-items: start;
+    padding: 18px var(--pad);
+    transition: background 0.15s;
+  }
+  .item-link:hover { background: var(--bg-alt); }
+
+  .item-no { font-size: 11px; letter-spacing: 0.2em; opacity: 0.6; padding-top: 5px; }
+  .item-main { display: block; }
+  .item-name {
+    display: block; font-family: var(--display);
+    font-size: clamp(24px, 3.6vw, 40px); line-height: 1; text-transform: uppercase;
+  }
+  .item-ing { display: block; margin-top: 5px; font-size: 16px; line-height: 1.45; max-width: 52ch; }
+  .item-price { font-size: 14px; padding-top: 5px; white-space: nowrap; }
+
+  .item-tags { display: flex; gap: 6px; flex-wrap: wrap; margin-top: 9px; }
+  .tag {
+    font-size: 10px; letter-spacing: 0.16em; text-transform: uppercase;
+    padding: 3px 9px; border: 1px solid currentColor;
+  }
+  .tag[hidden] { display: none; }
+  .tag-plain   { opacity: 0.6; }
+  .tag-off     { color: var(--red); }
+  .tag-season  { background: var(--yellow); border-color: var(--yellow); color: var(--ink); }
+  .tag-safe    { background: var(--ink); border-color: var(--ink); color: var(--paper); }
+  .tag-contains{ color: var(--red); }
+
+  /* Un plato que choca con un filtro: se apaga, no se oculta.
+     La opacidad no baja de --dim: por debajo deja de cumplir AA y
+     un filtro que vuelve ilegible el texto es un filtro roto.
+     Lo que marca el estado es la etiqueta CONTIENE, no el gris. */
+  .item.is-blocked .item-name,
+  .item.is-blocked .item-ing { opacity: var(--dim); }
+  .item.is-blocked .item-link { background: transparent; }
+
+  .item.is-off { opacity: var(--dim); }
+
+  .menu-empty {
+    padding: 60px var(--pad); text-align: center;
+    font-family: var(--serif); font-style: italic; font-size: 22px;
+  }
+  .menu-empty[hidden] { display: none; }
+
+  @media (max-width: 520px) {
+    .item-link { grid-template-columns: 1fr auto; }
+    .item-no { display: none; }
+  }
+</style>
+
+<script>
+  type ClientDish = {
+    slug: string;
+    allergens: string[];
+    days: number[];
+    service: ('mediodia' | 'noche')[];
+    season: { from: string; to: string } | null;
+  };
+
+  const root = document.querySelector('.menu') as HTMLElement | null;
+  if (root) {
+    const dishes: ClientDish[] = JSON.parse(root.dataset.dishes || '[]');
+    const bySlug = new Map(dishes.map((d) => [d.slug, d]));
+
+    const safeGet = (k: string) => { try { return localStorage.getItem(k); } catch { return null; } };
+    const safeSet = (k: string, v: string) => { try { localStorage.setItem(k, v); } catch {} };
+
+    /* ── 1. Mesa desde el QR: /carta?mesa=12 ── */
+    const params = new URLSearchParams(location.search);
+    const mesa = params.get('mesa') ?? params.get('table');
+    if (mesa && /^\d{1,3}$/.test(mesa)) {
+      const el = document.getElementById('menu-table');
+      const span = el?.querySelector('span');
+      if (el && span) {
+        span.textContent = `${span.dataset.label} ${mesa}`;
+        el.hidden = false;
+      }
+    }
+
+    /* ── 2. Franja de servicio segun la hora del navegador ── */
+    const now = new Date();
+    const mins = now.getHours() * 60 + now.getMinutes();
+    const current: 'mediodia' | 'noche' | null =
+      mins >= 13 * 60 + 30 && mins < 16 * 60 + 30 ? 'mediodia'
+      : (mins >= 20 * 60 || mins < 4 * 60) ? 'noche'
+      : null;
+
+    const serviceEl = document.getElementById('menu-service');
+    if (serviceEl) {
+      const name = current ? serviceEl.dataset[current] : serviceEl.dataset.allday;
+      serviceEl.textContent = `${serviceEl.dataset.now} · ${name}`;
+    }
+
+    /* ── 3. Filtros de alergenos ── */
+    const chips = Array.from(root.querySelectorAll<HTMLInputElement>('.chip-input'));
+    const clearBtn = document.getElementById('clear-filters') as HTMLButtonElement | null;
+    const countEl = document.getElementById('filters-count');
+    const emptyEl = document.getElementById('menu-empty');
+
+    const STORAGE_KEY = 'brasa_allergens';
+
+    function apply() {
+      const active = chips.filter((c) => c.checked).map((c) => c.value);
+      let blocked = 0;
+      let visible = 0;
+
+      root!.querySelectorAll<HTMLElement>('.item').forEach((item) => {
+        const d = bySlug.get(item.dataset.slug || '');
+        if (!d) return;
+
+        const clash = active.filter((a) => d.allergens.includes(a));
+        const isBlocked = clash.length > 0;
+
+        item.classList.toggle('is-blocked', isBlocked);
+
+        const safeTag = item.querySelector<HTMLElement>('.tag-safe');
+        const containsTag = item.querySelector<HTMLElement>('.tag-contains');
+
+        if (safeTag) safeTag.hidden = !(active.length > 0 && !isBlocked);
+
+        if (containsTag) {
+          if (isBlocked) {
+            const names = clash.map((a) => {
+              const chip = chips.find((c) => c.value === a);
+              return chip?.nextElementSibling?.textContent?.trim() ?? a;
+            });
+            containsTag.textContent = `${containsTag.dataset.prefix} ${names.join(' · ')}`;
+            containsTag.hidden = false;
+          } else {
+            containsTag.hidden = true;
+          }
+        }
+
+        if (isBlocked) blocked++; else visible++;
+      });
+
+      // Los platos seguros suben dentro de su grupo
+      root!.querySelectorAll<HTMLElement>('.menu-list').forEach((list) => {
+        const items = Array.from(list.children) as HTMLElement[];
+        items
+          .slice()
+          .sort((a, b) =>
+            Number(a.classList.contains('is-blocked')) - Number(b.classList.contains('is-blocked'))
+          )
+          .forEach((el) => list.appendChild(el));
+      });
+
+      if (clearBtn) clearBtn.hidden = active.length === 0;
+      if (countEl) {
+        countEl.textContent = blocked > 0 ? `${blocked} ${countEl.dataset.hidden}` : '';
+      }
+      if (emptyEl) emptyEl.hidden = visible > 0;
+
+      safeSet(STORAGE_KEY, JSON.stringify(active));
+    }
+
+    // Restaura lo que marcó la última vez
+    try {
+      const saved: string[] = JSON.parse(safeGet(STORAGE_KEY) || '[]');
+      if (saved.length) {
+        chips.forEach((c) => { c.checked = saved.includes(c.value); });
+      }
+    } catch {}
+
+    chips.forEach((c) => c.addEventListener('change', apply));
+    clearBtn?.addEventListener('click', () => {
+      chips.forEach((c) => { c.checked = false; });
+      apply();
+    });
+    apply();
+
+    /* ── 4. Lo de siempre ── */
+    const usualSlug = safeGet('brasa_usual');
+    if (usualSlug) {
+      const link = document.querySelector<HTMLAnchorElement>(`.item[data-slug="${usualSlug}"] .item-link`);
+      const name = link?.querySelector('.item-name')?.textContent;
+      const box = document.getElementById('usual');
+      const out = document.getElementById('usual-link') as HTMLAnchorElement | null;
+      if (link && name && box && out) {
+        out.textContent = name;
+        out.href = link.href;
+        box.hidden = false;
+      }
+    }
+  }
+</script>

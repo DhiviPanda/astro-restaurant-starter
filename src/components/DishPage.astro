@@ -1,0 +1,288 @@
+---
+import { Image } from 'astro:assets';
+import { asset, ANCHOS, SIZES, CALIDAD } from '../utils/images.ts';
+import { FALLBACK_SITE } from '../config.ts';
+import BaseLayout from '../layouts/BaseLayout.astro';
+import TopBar from './layout/TopBar.astro';
+import Credits from './layout/Credits.astro';
+import CookieBanner from './ui/CookieBanner.astro';
+import { getContent, availableToday, seasonDaysLeft, type Dish } from '../utils/content.ts';
+import { localePath, type Locale } from '../i18n/index.ts';
+
+interface Props { locale: Locale; dish: Dish; }
+const { locale, dish } = Astro.props;
+
+const { t, wines, producers } = await getContent(locale);
+
+const wine = dish.pairing ? wines.find((w: any) => w.slug === dish.pairing) : null;
+const producer = dish.producer ? producers.find((p: any) => p.slug === dish.producer) : null;
+const left = seasonDaysLeft(dish);
+const today = availableToday(dish);
+
+const siteUrl = Astro.site ?? new URL(FALLBACK_SITE);
+const schema = {
+  '@context': 'https://schema.org',
+  '@type': 'MenuItem',
+  name: dish.name,
+  description: dish.ingredients,
+  image: dish.img,
+  offers: {
+    '@type': 'Offer',
+    price: dish.price.replace(/[^\d.]/g, ''),
+    priceCurrency: 'EUR',
+  },
+  suitableForDiet: dish.vegan ? 'https://schema.org/VeganDiet' : undefined,
+  isPartOf: { '@type': 'Restaurant', name: t.site.name, url: siteUrl.href },
+};
+---
+
+<BaseLayout
+  title={`${dish.name} — ${t.site.name}`}
+  description={dish.ingredients}
+  image={dish.img}
+>
+  <script type="application/ld+json" slot="head" set:html={JSON.stringify(schema)} />
+
+  <TopBar t={t} locale={locale} />
+
+  <main class="dish">
+    <a class="dish-back" href={localePath('/carta', locale)}>← {t.dish.back}</a>
+
+    <div class="dish-top">
+      <figure class="dish-shot">
+        <Image
+          src={asset(dish.img)}
+          widths={[...ANCHOS.ficha]}
+          sizes={SIZES.ficha}
+          quality={CALIDAD}
+          alt="" loading="eager" fetchpriority="high" decoding="async"
+        />
+        <span class="dish-no">№{dish.no}</span>
+      </figure>
+
+      <div class="dish-head">
+        <h1 class="dish-name">{dish.name}</h1>
+        <p class="dish-line">{dish.line}</p>
+        <p class="dish-ing serif-it">{dish.ingredients}</p>
+
+        <div class="dish-tags">
+          {dish.vegan && <span class="tag tag-plain">{t.carta.vegan}</span>}
+          {!today && <span class="tag tag-off">{t.carta.notToday}</span>}
+          {(left !== null && left <= 21) && (
+            <span class="tag tag-season">
+              {left === 0 ? t.carta.seasonLast : t.carta.seasonEnding.replace('{n}', String(left))}
+            </span>
+          )}
+        </div>
+
+        <p class="dish-price">{dish.price}</p>
+
+        <button type="button" class="dish-usual" id="dish-usual"
+                data-slug={dish.slug}
+                data-mark={t.carta.markUsual}
+                data-unmark={t.carta.unmarkUsual}></button>
+      </div>
+    </div>
+
+    {dish.story && (
+      <section class="dish-story">
+        <p class="serif-it">{dish.story}</p>
+      </section>
+    )}
+
+    {dish.video && (
+      <section class="dish-video">
+        <p class="label">{t.dish.watch}</p>
+        <video controls preload="none" poster={dish.img} playsinline>
+          <source src={dish.video} type="video/mp4" />
+        </video>
+      </section>
+    )}
+
+    <div class="dish-facts">
+      <section class="fact">
+        <h2 class="fact-title">{t.dish.allergens}</h2>
+        {dish.allergens.length
+          ? <ul class="fact-list">
+              {dish.allergens.map((a) => <li>{t.allergens[a] ?? a}</li>)}
+            </ul>
+          : <p class="fact-none">{t.dish.none}</p>
+        }
+      </section>
+
+      <section class="fact">
+        <h2 class="fact-title">{t.dish.available}</h2>
+        <ul class="fact-days">
+          {t.days.short.map((d: string, i: number) => (
+            <li class:list={['day', { 'is-on': dish.days.includes(i) }]}>
+              <span class="sr-only">{t.days.long[i]}</span>
+              <span aria-hidden="true">{d}</span>
+            </li>
+          ))}
+        </ul>
+        <p class="fact-service">
+          {dish.service.map((s) => t.carta[s]).join(' · ')}
+        </p>
+      </section>
+
+      {wine && (
+        <section class="fact">
+          <h2 class="fact-title">{t.dish.pairing}</h2>
+          <p class="fact-wine">{wine.name} <span class="fact-year">{wine.year}</span></p>
+          <p class="fact-note serif-it">{wine.note}</p>
+          <p class="fact-prices">{wine.glass} / {t.dish.glass} · {wine.bottle} / {t.dish.bottle}</p>
+        </section>
+      )}
+
+      {producer && (
+        <section class="fact fact-producer">
+          <h2 class="fact-title">{t.dish.producer}</h2>
+          <figure class="fact-shot">
+            <Image
+              src={asset(producer.img)}
+              widths={[...ANCHOS.retrato]}
+              sizes={SIZES.retrato}
+              quality={CALIDAD}
+              alt="" loading="lazy" decoding="async"
+            />
+          </figure>
+          <p class="fact-wine">{producer.name}</p>
+          <p class="fact-place">{producer.place}</p>
+          <p class="fact-note serif-it">{producer.note}</p>
+        </section>
+      )}
+    </div>
+  </main>
+
+  <Credits t={t} locale={locale} producers={producers} />
+  <CookieBanner />
+</BaseLayout>
+
+<style is:global>
+  .dish { padding-bottom: clamp(50px, 8vw, 90px); }
+
+  .dish-back {
+    display: inline-block; padding: 18px var(--pad);
+    font-size: 11px; letter-spacing: 0.2em; text-transform: uppercase;
+  }
+  .dish-back:hover { color: var(--red); }
+
+  .dish-top {
+    display: grid; grid-template-columns: minmax(280px, 42vw) 1fr;
+    border-top: var(--rule); border-bottom: var(--rule);
+  }
+
+  .dish-shot { position: relative; aspect-ratio: 1 / 1; overflow: hidden; background: var(--ink); }
+  .dish-shot img {
+    width: 100%; height: 100%; object-fit: cover;
+    filter: grayscale(1) contrast(1.5) sepia(0.35) hue-rotate(-25deg) saturate(2.2);
+  }
+  .dish-no {
+    position: absolute; top: 16px; left: 16px;
+    color: var(--paper); font-size: 11px; letter-spacing: 0.3em;
+  }
+
+  .dish-head {
+    padding: clamp(28px, 4vw, 48px) var(--pad);
+    display: flex; flex-direction: column; justify-content: center;
+  }
+  .dish-name {
+    font-family: var(--display);
+    font-size: clamp(44px, 9vw, 150px); line-height: 0.82;
+    text-transform: uppercase;
+  }
+  .dish-line {
+    margin-top: 12px; font-size: 11px;
+    letter-spacing: 0.24em; text-transform: uppercase; color: var(--red);
+  }
+  .dish-ing { margin-top: 20px; font-size: clamp(18px, 1.8vw, 26px); line-height: 1.5; max-width: 42ch; }
+  .dish-tags { display: flex; gap: 6px; flex-wrap: wrap; margin-top: 20px; }
+  .dish-price { margin-top: 22px; font-size: 22px; }
+
+  .dish-usual {
+    margin-top: 22px; align-self: flex-start;
+    border: var(--rule); padding: 11px 18px;
+    font-size: 11px; letter-spacing: 0.18em; text-transform: uppercase;
+    transition: background 0.15s, color 0.15s;
+  }
+  .dish-usual:hover { background: var(--ink); color: var(--paper); }
+  .dish-usual.is-on { background: var(--yellow); border-color: var(--yellow); }
+
+  .dish-story {
+    padding: clamp(40px, 6vw, 70px) var(--pad);
+    border-bottom: var(--rule); background: var(--bg-alt);
+  }
+  .dish-story p {
+    max-width: 44ch; margin: 0 auto; text-align: center;
+    font-size: clamp(19px, 2.1vw, 30px); line-height: 1.5;
+  }
+
+  .dish-video { padding: clamp(32px, 5vw, 56px) var(--pad); border-bottom: var(--rule); }
+  .dish-video video { width: 100%; max-width: 820px; margin: 14px auto 0; background: var(--ink); }
+
+  .dish-facts {
+    display: grid; grid-template-columns: repeat(auto-fit, minmax(230px, 1fr));
+  }
+  .fact {
+    padding: clamp(26px, 3vw, 38px) var(--pad);
+    border-right: var(--rule); border-bottom: var(--rule);
+  }
+  .fact-title {
+    font-family: var(--display); font-size: clamp(20px, 2.4vw, 32px);
+    line-height: 1; text-transform: uppercase; color: var(--red);
+  }
+  .fact-list, .fact-days { list-style: none; }
+  .fact-list { margin-top: 14px; font-size: 13px; letter-spacing: 0.1em; line-height: 2; text-transform: uppercase; }
+  .fact-none { margin-top: 14px; font-size: 13px; opacity: 0.75; }
+
+  .fact-days { margin-top: 16px; display: flex; gap: 5px; }
+  .day {
+    width: 30px; height: 30px; display: grid; place-items: center;
+    border: 1px solid rgba(10,10,10,0.25); font-size: 11px;
+    /* La inicial del dia es informacion, no decoracion: no baja de --dim.
+       Lo que separa un dia activo de uno apagado es la inversion
+       (fondo tinta, texto papel), no el gris. */
+    opacity: var(--dim);
+  }
+  .day.is-on { background: var(--ink); color: var(--paper); border-color: var(--ink); opacity: 1; }
+  .fact-service { margin-top: 12px; font-size: 11px; letter-spacing: 0.18em; text-transform: uppercase; opacity: 0.78; }
+
+  .fact-wine { margin-top: 14px; font-size: 17px; letter-spacing: 0.06em; }
+  .fact-year { opacity: 0.7; font-size: 13px; }
+  .fact-place { font-size: 11px; letter-spacing: 0.24em; color: var(--red); text-transform: uppercase; margin-top: 4px; }
+  .fact-note { margin-top: 8px; font-size: 17px; line-height: 1.5; }
+  .fact-prices { margin-top: 12px; font-size: 11px; letter-spacing: 0.14em; opacity: 0.78; }
+
+  .fact-shot { margin-top: 14px; aspect-ratio: 3 / 2; overflow: hidden; background: var(--ink); }
+  .fact-shot img { width: 100%; height: 100%; object-fit: cover; filter: grayscale(1) contrast(1.35); }
+
+  @media (max-width: 820px) {
+    .dish-top { grid-template-columns: 1fr; }
+    .dish-shot { aspect-ratio: 4 / 3; }
+  }
+</style>
+
+<script>
+  const btn = document.getElementById('dish-usual') as HTMLButtonElement | null;
+  if (btn) {
+    const slug = btn.dataset.slug!;
+    const read = () => { try { return localStorage.getItem('brasa_usual'); } catch { return null; } };
+
+    const paint = () => {
+      const on = read() === slug;
+      btn.textContent = on ? btn.dataset.unmark! : btn.dataset.mark!;
+      btn.classList.toggle('is-on', on);
+      btn.setAttribute('aria-pressed', String(on));
+    };
+
+    btn.addEventListener('click', () => {
+      try {
+        if (read() === slug) localStorage.removeItem('brasa_usual');
+        else localStorage.setItem('brasa_usual', slug);
+      } catch {}
+      paint();
+    });
+
+    paint();
+  }
+</script>

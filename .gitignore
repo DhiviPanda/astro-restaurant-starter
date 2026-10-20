@@ -1,0 +1,26 @@
+# Dependencias
+node_modules/
+
+# Build
+dist/
+.astro/
+
+# Entorno
+.env
+.env.local
+.env.production
+
+# Sistema
+.DS_Store
+Thumbs.db
+
+# Logs
+npm-debug.log*
+
+# Editor
+.vscode/
+.idea/
+
+# Las fuentes de public/fonts/ y las fotos de src/assets/ SI van al repo.
+# Son parte del starter: quien lo clone tiene que tener todo listo sin
+# descargar nada. No las ignores.

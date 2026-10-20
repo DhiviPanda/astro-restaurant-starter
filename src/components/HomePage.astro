@@ -1,0 +1,129 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import TopBar from './layout/TopBar.astro';
+import Credits from './layout/Credits.astro';
+import Chapter from './ui/Chapter.astro';
+import Hero from './sections/Hero.astro';
+import DishPosters from './sections/DishPosters.astro';
+import SpecSheet from './sections/SpecSheet.astro';
+import Sides from './sections/Sides.astro';
+import GreenCut from './sections/GreenCut.astro';
+import ChefTable from './sections/ChefTable.astro';
+import GrillList from './sections/GrillList.astro';
+import Producers from './sections/Producers.astro';
+import Reserve from './sections/Reserve.astro';
+import CookieBanner from './ui/CookieBanner.astro';
+import { getContent } from '../utils/content.ts';
+import { restaurant, FALLBACK_SITE } from '../config.ts';
+import type { Locale } from '../i18n/index.ts';
+
+interface Props { locale: Locale; }
+const { locale } = Astro.props;
+
+const { t, dishes, producers, catalog } = await getContent(locale);
+
+const carnes = dishes.filter((d) => d.category === 'carnes');
+const verdes = dishes.filter((d) => d.category === 'verdes');
+const acompanantes = dishes.filter((d) => d.category === 'acompanantes');
+
+const siteUrl = Astro.site ?? new URL(FALLBACK_SITE);
+
+const schema = {
+  '@context': 'https://schema.org',
+  '@type': 'Restaurant',
+  name: t.site.name,
+  description: t.site.description,
+  url: siteUrl.href,
+  telephone: restaurant.phone,
+  email: restaurant.email,
+  servesCuisine: restaurant.cuisine,
+  priceRange: restaurant.priceRange,
+  acceptsReservations: 'True',
+  address: {
+    '@type': 'PostalAddress',
+    streetAddress: restaurant.address,
+    addressLocality: restaurant.city,
+    addressRegion: restaurant.region,
+    postalCode: restaurant.postalCode,
+    addressCountry: restaurant.country,
+  },
+  geo: {
+    '@type': 'GeoCoordinates',
+    latitude: restaurant.geo.lat,
+    longitude: restaurant.geo.lng,
+  },
+  openingHoursSpecification: catalog.openingHours.map((h: any) => ({
+    '@type': 'OpeningHoursSpecification',
+    dayOfWeek: ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'][h.day],
+    opens: h.from,
+    closes: h.to,
+  })),
+  hasMenu: {
+    '@type': 'Menu',
+    name: t.carta.title,
+    hasMenuSection: [
+      { key: 'carnes', items: carnes },
+      { key: 'verdes', items: verdes },
+      { key: 'acompanantes', items: acompanantes },
+    ].map((sec) => ({
+      '@type': 'MenuSection',
+      name: t.carta.categories[sec.key],
+      hasMenuItem: sec.items.map((d) => ({
+        '@type': 'MenuItem',
+        name: d.name,
+        description: d.ingredients,
+        offers: { '@type': 'Offer', price: d.price.replace(/[^\d.]/g, ''), priceCurrency: 'EUR' },
+        suitableForDiet: d.vegan ? 'https://schema.org/VeganDiet' : undefined,
+      })),
+    })),
+  },
+  sameAs: restaurant.sameAs,
+};
+---
+
+<BaseLayout title={`${t.site.name} — ${t.site.tagline}`} description={t.site.description}>
+  <script type="application/ld+json" slot="head" set:html={JSON.stringify(schema)} />
+
+  <TopBar t={t} locale={locale} />
+
+  <main>
+    <Hero t={t} locale={locale} />
+
+    <Chapter
+      label={t.chapters.one.label}
+      title={t.chapters.one.title}
+      sub={t.chapters.one.sub}
+      drip
+      id="carnes"
+    />
+    <DishPosters dishes={carnes} t={t} locale={locale} />
+
+    <SpecSheet t={t} />
+
+    <GreenCut dishes={verdes} t={t} locale={locale} />
+
+    <Chapter
+      label={t.chapters.two.label}
+      title={t.chapters.two.title}
+      sub={t.chapters.two.sub}
+      id="acompanantes"
+    />
+    <Sides dishes={acompanantes} t={t} locale={locale} />
+
+    <ChefTable t={t} locale={locale} chefTable={catalog.chefTable} />
+
+    <Chapter
+      label={t.chapters.four.label}
+      title={t.chapters.four.title}
+      sub={t.chapters.four.sub}
+    />
+    <Producers producers={producers} />
+
+    <GrillList t={t} />
+
+    <Reserve t={t} />
+  </main>
+
+  <Credits t={t} locale={locale} producers={producers} />
+  <CookieBanner />
+</BaseLayout>

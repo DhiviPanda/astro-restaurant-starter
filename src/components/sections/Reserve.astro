@@ -1,0 +1,33 @@
+---
+interface Props { t: any; }
+const { t } = Astro.props;
+const tel = t.site.phone.replace(/\s/g, '');
+---
+
+<section class="reserve" id="reservar">
+  <h2 class="reserve-title">{t.reservar.title}</h2>
+  <p class="reserve-sub serif-it">{t.reservar.sub}</p>
+  <div class="reserve-actions">
+    <a href={`tel:${tel}`} class="btn btn-ink">{t.site.phone}</a>
+    <!-- CHECKPOINT: enlaza aqui tu sistema de reservas (ElTenedor, Covermanager...) -->
+    <a href={`mailto:${t.site.email}`} class="btn btn-paper">{t.reservar.online}</a>
+  </div>
+</section>
+
+<style is:global>
+  .reserve {
+    background: var(--red); color: var(--paper);
+    padding: clamp(70px, 10vw, 110px) var(--pad);
+    text-align: center;
+  }
+  .reserve-title {
+    font-family: var(--display);
+    font-size: clamp(56px, 16vw, 270px); line-height: 0.82;
+    text-transform: uppercase;
+  }
+  .reserve-sub { margin-top: 16px; font-size: clamp(19px, 2.2vw, 33px); }
+  .reserve-actions {
+    margin-top: 32px; display: flex; gap: 14px;
+    justify-content: center; flex-wrap: wrap;
+  }
+</style>

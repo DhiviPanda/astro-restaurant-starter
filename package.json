@@ -1,0 +1,33 @@
+{
+  "name": "astro-restaurant-starter",
+  "version": "1.0.0",
+  "description": "Astro 7 starter for premium restaurants. Native i18n (ES/EN/FR), QR table menu, allergen filters, day-based availability, seasonal dishes, wine pairing. WordPress headless ready.",
+  "author": "Cris Culebras - Culebra Lab <hola@darumaproducciones.es>",
+  "license": "MIT",
+  "type": "module",
+  "keywords": [
+    "astro",
+    "starter",
+    "restaurant",
+    "i18n",
+    "qr-menu",
+    "allergens",
+    "wordpress-headless",
+    "culebra-lab"
+  ],
+  "scripts": {
+    "dev": "astro dev",
+    "build": "astro build",
+    "preview": "astro preview",
+    "check": "astro check",
+    "fotos": "node scripts/descargar-imagenes.mjs"
+  },
+  "dependencies": {
+    "astro": "^7.0.0",
+    "@astrojs/sitemap": "^3.7.0",
+    "sitemap": "^8.0.0"
+  },
+  "devDependencies": {
+    "typescript": "^5.0.0"
+  }
+}

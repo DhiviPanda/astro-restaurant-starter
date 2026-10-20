@@ -1,0 +1,106 @@
+---
+interface Props { t: any; }
+const { t } = Astro.props;
+
+// CHECKPOINT: pon tu clave de Web3Forms en .env (PUBLIC_WEB3FORMS_KEY).
+// Sin clave el formulario no envía y avisa en consola. Ver README.
+const KEY = import.meta.env.PUBLIC_WEB3FORMS_KEY ?? '';
+---
+
+<section class="list" id="lista">
+  <div class="list-inner">
+    <p class="list-label">{t.lista.label}</p>
+    <h2 class="list-title">{t.lista.title}</h2>
+    <p class="list-body serif-it">{t.lista.body}</p>
+
+    <form class="list-form" id="grill-form" data-key={KEY}>
+      <label class="sr-only" for="grill-email">{t.lista.placeholder}</label>
+      <input
+        id="grill-email" name="email" type="email" required
+        placeholder={t.lista.placeholder} autocomplete="email"
+      />
+      <!-- honeypot antispam: fuera del arbol de accesibilidad -->
+      <input type="checkbox" name="botcheck" class="honeypot" tabindex="-1" autocomplete="off" aria-hidden="true" />
+      <button type="submit" class="btn btn-ink">{t.lista.cta}</button>
+    </form>
+
+    <p class="list-msg" id="grill-msg" role="status" aria-live="polite"
+       data-ok={t.lista.ok} data-error={t.lista.error}></p>
+    <p class="list-legal">{t.lista.legal}</p>
+  </div>
+</section>
+
+<style is:global>
+  .list {
+    background: var(--bg-clean);
+    border-top: var(--rule); border-bottom: var(--rule);
+    padding: clamp(70px, 10vw, 120px) var(--pad);
+  }
+  .list-inner { max-width: 620px; margin: 0 auto; text-align: center; }
+
+  .list-label { font-size: 11px; letter-spacing: 0.4em; color: var(--red); text-transform: uppercase; }
+  .list-title {
+    font-family: var(--display);
+    font-size: clamp(44px, 8vw, 110px); line-height: 0.85; margin-top: 12px;
+    text-transform: uppercase;
+  }
+  .list-body { margin-top: 20px; font-size: clamp(17px, 1.7vw, 23px); line-height: 1.55; }
+
+  .list-form {
+    margin-top: 34px; display: flex; gap: 10px; flex-wrap: wrap; justify-content: center;
+  }
+  .list-form input[type="email"] {
+    flex: 1 1 260px; min-width: 0;
+    border: var(--rule); background: transparent; border-radius: 0;
+    padding: 16px 18px; font-family: var(--mono); font-size: 14px; color: var(--ink);
+  }
+  .list-form input::placeholder { color: rgba(10,10,10,0.62); }
+  .list-form input:focus { outline: 3px solid var(--red); outline-offset: 2px; }
+
+  .list-msg {
+    margin-top: 18px; min-height: 1.4em;
+    font-size: 12px; letter-spacing: 0.2em; text-transform: uppercase;
+  }
+  .list-msg.is-ok { color: var(--red); }
+  .list-msg.is-error { color: var(--ink); }
+
+  .list-legal { margin-top: 10px; font-size: 11px; opacity: 0.75; letter-spacing: 0.12em; }
+</style>
+
+<script>
+  const form = document.getElementById('grill-form') as HTMLFormElement | null;
+  const msg = document.getElementById('grill-msg');
+  if (form && msg) {
+    form.addEventListener('submit', async (e) => {
+      e.preventDefault();
+      const key = form.dataset.key;
+      msg.className = 'list-msg';
+
+      if (!key) {
+        console.warn('[BRASA] Falta PUBLIC_WEB3FORMS_KEY en .env — el formulario no envía.');
+        msg.textContent = msg.dataset.error ?? '';
+        msg.classList.add('is-error');
+        return;
+      }
+
+      const data = new FormData(form);
+      data.append('access_key', key);
+      data.append('subject', 'Nueva alta en la lista de la parrilla');
+
+      try {
+        const res = await fetch('https://api.web3forms.com/submit', { method: 'POST', body: data });
+        const json = await res.json();
+        if (json.success) {
+          msg.textContent = msg.dataset.ok ?? '';
+          msg.classList.add('is-ok');
+          form.reset();
+        } else {
+          throw new Error('web3forms');
+        }
+      } catch {
+        msg.textContent = msg.dataset.error ?? '';
+        msg.classList.add('is-error');
+      }
+    });
+  }
+</script>

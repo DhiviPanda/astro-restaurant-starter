@@ -1,0 +1,455 @@
+{
+  "_comment": "Datos NEUTROS al idioma: precios, alergenos, disponibilidad, imagenes. Los textos viven en /mock/{locale}.json y se cruzan por slug. img = archivo en src/assets/. imgSource = de donde salio la foto de ejemplo; lo usa `npm run fotos` y puedes borrarlo cuando pongas fotos propias.",
+  "service": {
+    "mediodia": {
+      "from": "13:30",
+      "to": "16:30"
+    },
+    "noche": {
+      "from": "20:00",
+      "to": "00:00"
+    }
+  },
+  "openingHours": [
+    {
+      "day": 2,
+      "from": "13:30",
+      "to": "00:00"
+    },
+    {
+      "day": 3,
+      "from": "13:30",
+      "to": "00:00"
+    },
+    {
+      "day": 4,
+      "from": "13:30",
+      "to": "00:00"
+    },
+    {
+      "day": 5,
+      "from": "13:30",
+      "to": "01:00"
+    },
+    {
+      "day": 6,
+      "from": "13:30",
+      "to": "01:00"
+    },
+    {
+      "day": 0,
+      "from": "13:30",
+      "to": "17:00"
+    }
+  ],
+  "chefTable": {
+    "active": true,
+    "days": [
+      4,
+      5,
+      6
+    ],
+    "time": "21:30",
+    "seats": 8,
+    "price": "95 €"
+  },
+  "dishes": [
+    {
+      "slug": "la-castiza",
+      "no": "01",
+      "category": "carnes",
+      "price": "19 €",
+      "allergens": [
+        "gluten",
+        "lactosa",
+        "huevo",
+        "mostaza"
+      ],
+      "days": [
+        0,
+        2,
+        3,
+        4,
+        5,
+        6
+      ],
+      "service": [
+        "mediodia",
+        "noche"
+      ],
+      "season": null,
+      "pairing": "mencia",
+      "producer": "la-erilla",
+      "vegan": false,
+      "img": "la-castiza.jpg",
+      "video": "",
+      "imgSource": "https://images.unsplash.com/photo-1550547660-d9450f859349?w=1600&q=80"
+    },
+    {
+      "slug": "la-roja",
+      "no": "02",
+      "category": "carnes",
+      "price": "21 €",
+      "allergens": [
+        "gluten",
+        "lactosa",
+        "huevo"
+      ],
+      "days": [
+        0,
+        4,
+        5,
+        6
+      ],
+      "service": [
+        "noche"
+      ],
+      "season": null,
+      "pairing": "ribera",
+      "producer": "la-erilla",
+      "vegan": false,
+      "img": "la-roja.jpg",
+      "video": "",
+      "imgSource": "https://images.unsplash.com/photo-1571091718767-18b5b1457add?w=1600&q=80"
+    },
+    {
+      "slug": "la-doble",
+      "no": "03",
+      "category": "carnes",
+      "price": "24 €",
+      "allergens": [
+        "gluten",
+        "lactosa",
+        "huevo",
+        "mostaza"
+      ],
+      "days": [
+        0,
+        2,
+        3,
+        4,
+        5,
+        6
+      ],
+      "service": [
+        "mediodia",
+        "noche"
+      ],
+      "season": null,
+      "pairing": "ribera",
+      "producer": "la-erilla",
+      "vegan": false,
+      "img": "la-doble.jpg",
+      "video": "",
+      "imgSource": "https://images.unsplash.com/photo-1586190848861-99aa4a171e90?w=1600&q=80"
+    },
+    {
+      "slug": "la-verde",
+      "no": "04",
+      "category": "verdes",
+      "price": "16 €",
+      "allergens": [
+        "gluten",
+        "lactosa",
+        "sesamo"
+      ],
+      "days": [
+        0,
+        2,
+        3,
+        4,
+        5,
+        6
+      ],
+      "service": [
+        "mediodia",
+        "noche"
+      ],
+      "season": null,
+      "pairing": "verdejo",
+      "producer": "huerta-aranjuez",
+      "vegan": false,
+      "img": "la-verde.jpg",
+      "video": "",
+      "imgSource": "https://images.unsplash.com/photo-1520072959219-c595dc870360?w=1600&q=80"
+    },
+    {
+      "slug": "la-brava",
+      "no": "05",
+      "category": "verdes",
+      "price": "15 €",
+      "allergens": [
+        "gluten",
+        "sesamo",
+        "soja"
+      ],
+      "days": [
+        0,
+        2,
+        3,
+        4,
+        5,
+        6
+      ],
+      "service": [
+        "mediodia",
+        "noche"
+      ],
+      "season": null,
+      "pairing": "verdejo",
+      "producer": "huerta-aranjuez",
+      "vegan": true,
+      "img": "la-brava.jpg",
+      "video": "",
+      "imgSource": "https://images.unsplash.com/photo-1525059696034-4967a8e1dca2?w=1600&q=80"
+    },
+    {
+      "slug": "la-de-caza",
+      "no": "06",
+      "category": "carnes",
+      "price": "26 €",
+      "allergens": [
+        "gluten",
+        "lactosa",
+        "frutos-secos"
+      ],
+      "days": [
+        4,
+        5,
+        6
+      ],
+      "service": [
+        "noche"
+      ],
+      "season": {
+        "from": "2026-10-01",
+        "to": "2026-12-20"
+      },
+      "pairing": "ribera",
+      "producer": "la-erilla",
+      "vegan": false,
+      "img": "la-de-caza.jpg",
+      "video": "",
+      "imgSource": "https://images.unsplash.com/photo-1572802419224-296b0aeee0d9?w=1600&q=80"
+    },
+    {
+      "slug": "patatas-bravas",
+      "no": "07",
+      "category": "acompanantes",
+      "price": "7 €",
+      "allergens": [
+        "huevo"
+      ],
+      "days": [
+        0,
+        2,
+        3,
+        4,
+        5,
+        6
+      ],
+      "service": [
+        "mediodia",
+        "noche"
+      ],
+      "season": null,
+      "pairing": null,
+      "producer": null,
+      "vegan": false,
+      "img": "patatas-bravas.jpg",
+      "video": "",
+      "imgSource": "https://images.unsplash.com/photo-1518013431117-eb1465fa5752?w=1600&q=80"
+    },
+    {
+      "slug": "batata-brasa",
+      "no": "08",
+      "category": "acompanantes",
+      "price": "7 €",
+      "allergens": [],
+      "days": [
+        0,
+        2,
+        3,
+        4,
+        5,
+        6
+      ],
+      "service": [
+        "mediodia",
+        "noche"
+      ],
+      "season": null,
+      "pairing": null,
+      "producer": "huerta-aranjuez",
+      "vegan": true,
+      "img": "batata-brasa.jpg",
+      "video": ""
+    },
+    {
+      "slug": "zanahoria-asada",
+      "no": "09",
+      "category": "acompanantes",
+      "price": "8 €",
+      "allergens": [
+        "frutos-secos"
+      ],
+      "days": [
+        0,
+        2,
+        3,
+        4,
+        5,
+        6
+      ],
+      "service": [
+        "mediodia",
+        "noche"
+      ],
+      "season": {
+        "from": "2026-09-15",
+        "to": "2026-11-30"
+      },
+      "pairing": "verdejo",
+      "producer": "huerta-aranjuez",
+      "vegan": true,
+      "img": "zanahoria-asada.jpg",
+      "video": "",
+      "imgSource": "https://images.unsplash.com/photo-1447175008436-054170c2e979?w=1600&q=80"
+    },
+    {
+      "slug": "croqueta-de-carne",
+      "no": "10",
+      "category": "acompanantes",
+      "price": "4 €",
+      "allergens": [
+        "gluten",
+        "lactosa",
+        "huevo"
+      ],
+      "days": [
+        2,
+        3,
+        4,
+        5,
+        6
+      ],
+      "service": [
+        "mediodia",
+        "noche"
+      ],
+      "season": null,
+      "pairing": null,
+      "producer": null,
+      "vegan": false,
+      "img": "croqueta-de-carne.jpg",
+      "video": "",
+      "imgSource": "https://images.unsplash.com/photo-1626645738196-c2a7c87a8f58?w=1600&q=80"
+    },
+    {
+      "slug": "ensalada-de-tomate",
+      "no": "11",
+      "category": "acompanantes",
+      "price": "9 €",
+      "allergens": [],
+      "days": [
+        0,
+        2,
+        3,
+        4,
+        5,
+        6
+      ],
+      "service": [
+        "mediodia",
+        "noche"
+      ],
+      "season": {
+        "from": "2026-06-01",
+        "to": "2026-10-31"
+      },
+      "pairing": "verdejo",
+      "producer": "huerta-aranjuez",
+      "vegan": true,
+      "img": "ensalada-de-tomate.jpg",
+      "video": "",
+      "imgSource": "https://images.unsplash.com/photo-1592417817098-8fd3d9eb14a5?w=1600&q=80"
+    },
+    {
+      "slug": "aros-de-cebolla",
+      "no": "12",
+      "category": "acompanantes",
+      "price": "6 €",
+      "allergens": [
+        "gluten",
+        "lactosa",
+        "huevo"
+      ],
+      "days": [
+        0,
+        2,
+        3,
+        4,
+        5,
+        6
+      ],
+      "service": [
+        "mediodia",
+        "noche"
+      ],
+      "season": null,
+      "pairing": null,
+      "producer": null,
+      "vegan": false,
+      "img": "aros-de-cebolla.jpg",
+      "video": "",
+      "imgSource": "https://images.unsplash.com/photo-1518013431117-eb1465fa5752?w=1600&q=80"
+    }
+  ],
+  "wines": [
+    {
+      "slug": "ribera",
+      "glass": "6 €",
+      "bottle": "28 €",
+      "year": "2021"
+    },
+    {
+      "slug": "mencia",
+      "glass": "5 €",
+      "bottle": "24 €",
+      "year": "2022"
+    },
+    {
+      "slug": "verdejo",
+      "glass": "5 €",
+      "bottle": "22 €",
+      "year": "2023"
+    }
+  ],
+  "producers": [
+    {
+      "slug": "la-erilla",
+      "img": "productor-la-erilla.jpg",
+      "imgSource": "https://images.unsplash.com/photo-1500937386664-56d1dfef3854?w=1600&q=80"
+    },
+    {
+      "slug": "huerta-aranjuez",
+      "img": "productor-huerta-aranjuez.jpg",
+      "imgSource": "https://images.unsplash.com/photo-1416879595882-3373a0480b5b?w=1600&q=80"
+    },
+    {
+      "slug": "obrador-cava-baja",
+      "img": "productor-obrador-cava-baja.jpg",
+      "imgSource": "https://images.unsplash.com/photo-1509440159596-0249088772ff?w=1600&q=80"
+    }
+  ],
+  "images": {
+    "hero": {
+      "img": "hero.jpg",
+      "imgSource": "https://images.unsplash.com/photo-1568901346375-23c9450c58cd?w=1600&q=80"
+    },
+    "chefTable": {
+      "img": "mesa-del-chef.jpg",
+      "imgSource": "https://images.unsplash.com/photo-1594212699903-ec8a3eca50f5?w=1600&q=80"
+    }
+  }
+}

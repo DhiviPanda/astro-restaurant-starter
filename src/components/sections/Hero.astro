@@ -1,0 +1,161 @@
+---
+import { localePath, type Locale } from '../../i18n/index.ts';
+import { Image } from 'astro:assets';
+import { asset, ANCHOS, SIZES, CALIDAD } from '../../utils/images.ts';
+import catalog from '../../data/catalog.json';
+
+interface Props { t: any; locale: Locale; }
+const { t, locale } = Astro.props;
+
+// Esta es la imagen LCP de la home: la unica que carga en eager.
+const heroImg = asset(catalog.images.hero.img);
+---
+
+<section class="hero">
+  <div class="scanlines" aria-hidden="true"></div>
+
+  <h1 class="hero-word">{t.site.name}</h1>
+
+  <div class="hero-grid">
+    <div class="hero-left">
+      <p class="hero-claim serif-it" set:html={t.hero.claim} />
+      <p class="hero-sub" set:html={t.hero.sub} />
+      <a href={localePath('/#reservar', locale)} class="btn btn-red hero-cta">{t.hero.cta}</a>
+    </div>
+
+    <figure class="hero-shot">
+      <Image
+        src={heroImg}
+        widths={[...ANCHOS.hero]}
+        sizes={SIZES.hero}
+        quality={CALIDAD}
+        alt=""
+        loading="eager"
+        fetchpriority="high"
+        decoding="async"
+      />
+      <div class="hero-shot-wash" aria-hidden="true"></div>
+    </figure>
+
+    <div class="hero-right">
+      <p class="hero-take">{t.hero.eyebrow}</p>
+      <blockquote class="hero-quote serif-it">{t.hero.quote}</blockquote>
+    </div>
+  </div>
+
+  <p class="hero-scream" aria-hidden="true">{t.hero.scream}</p>
+</section>
+
+<style is:global>
+  .hero {
+    position: relative;
+    /* Una pantalla exacta: el scream cierra abajo */
+    min-height: 100vh;
+    display: grid;
+    /* minmax(0, 1fr) es clave: sin esto la columna crece hasta los 112vw
+       de .hero-word y empuja la columna derecha fuera de pantalla. */
+    grid-template-columns: minmax(0, 1fr);
+    grid-template-rows: auto 1fr auto;
+    overflow: hidden;
+  }
+
+  .hero-word {
+    /* z-index alto: la palabra pisa la foto, no al revés */
+    position: relative; z-index: 5;
+    pointer-events: none;
+    font-family: var(--display);
+    font-size: 22vw; line-height: 0.78;
+    letter-spacing: -0.02em; text-align: center;
+    margin-top: 40px;
+    /* Desborda a los lados a propósito; .hero lo recorta */
+    width: 112vw; margin-left: -6vw;
+  }
+
+  .hero-grid {
+    position: relative; z-index: 2;
+    display: grid;
+    /* La columna central la dimensiona la propia foto (auto) */
+    grid-template-columns: minmax(0, 1fr) auto minmax(0, 1fr);
+    align-items: start;
+    margin-top: -4vw;
+  }
+
+  .hero-left { padding: 4vw 0 0 var(--pad); min-width: 0; }
+  .hero-claim { font-size: clamp(28px, 3.4vw, 54px); line-height: 1.05; }
+  .hero-sub {
+    margin-top: 22px; font-size: 11px; letter-spacing: 0.24em;
+    line-height: 2.2; max-width: 26ch; text-transform: uppercase;
+  }
+  .hero-cta { margin-top: 30px; }
+
+  .hero-shot {
+    position: relative; z-index: 1;
+    aspect-ratio: 1 / 1; overflow: hidden;
+    background: var(--ink);
+    /* Llega hasta la mitad de la B y de la A.
+       El min() con vh evita que en pantallas bajas desborde el alto. */
+    width: min(34vw, 54vh);
+    margin: 0 auto;
+  }
+  .hero-shot img {
+    width: 100%; height: 100%; object-fit: cover;
+    /* Sin grayscale ni multiply: la foto tiene que leerse como foto */
+    filter: contrast(1.08) saturate(0.9);
+  }
+  .hero-shot-wash {
+    position: absolute; inset: 0;
+    /* Tinte rojo sutil, no una capa que tape */
+    background: var(--red); mix-blend-mode: soft-light; opacity: 0.4;
+  }
+
+  .hero-right { padding: 7vw var(--pad) 0 0; text-align: right; min-width: 0; }
+  .hero-take {
+    font-size: 11px; letter-spacing: 0.26em; line-height: 2.4;
+    text-transform: uppercase;
+    /* El eyebrow es largo y no rompe solo: forzamos el salto */
+    overflow-wrap: anywhere;
+  }
+  .hero-quote {
+    margin-top: 26px; font-size: clamp(16px, 1.4vw, 23px);
+    line-height: 1.35; max-width: 20ch; margin-left: auto;
+  }
+
+  /* El scream ya no es absolute: ocupa la tercera fila del grid */
+  .hero-scream {
+    position: relative; z-index: 3;
+    text-align: center; pointer-events: none;
+    font-family: var(--display);
+    font-size: 7vw; line-height: 0.9; letter-spacing: 0.06em;
+    color: var(--yellow); mix-blend-mode: multiply;
+    padding: 16px var(--pad) 26px;
+    align-self: end;
+  }
+
+  /* ── Móvil ── */
+  @media (max-width: 880px) {
+    .hero {
+      min-height: 100svh; /* svh = small viewport height, evita el salto con la barra del navegador */
+      grid-template-rows: auto auto auto;
+    }
+    .hero-word { font-size: 28vw; }
+    .hero-grid {
+      grid-template-columns: 1fr;
+      gap: 0;
+      margin-top: 8px;
+    }
+    .hero-left { padding: 24px var(--pad) 0; order: 2; }
+    .hero-shot { order: 1; aspect-ratio: 4 / 3; width: 100%; max-height: 45vw; }
+    .hero-right { order: 3; text-align: left; padding: 20px var(--pad) 0; }
+    .hero-quote { margin-left: 0; max-width: 100%; }
+    .hero-scream { font-size: 14vw; padding: 12px var(--pad) 20px; }
+  }
+
+  @media (max-width: 480px) {
+    .hero-word { font-size: 25vw; margin-top: 16px; }
+    .hero-claim { font-size: clamp(22px, 7vw, 34px); }
+    .hero-shot { aspect-ratio: 16 / 9; width: 100%; max-height: none; }
+    .hero-scream { font-size: 16vw; }
+    /* A pantallas pequeñas la columna derecha ocupa demasiado espacio: la ocultamos */
+    .hero-right { display: none; }
+  }
+</style>

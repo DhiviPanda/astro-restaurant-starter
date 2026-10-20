@@ -1,0 +1,77 @@
+---
+import { localePath, type Locale } from '../../i18n/index.ts';
+import type { Dish } from '../../utils/content.ts';
+
+interface Props { dishes: Dish[]; t: any; locale: Locale; }
+const { dishes, t, locale } = Astro.props;
+const lead = dishes[0];
+---
+
+<section class="green">
+  <span class="green-rhombus green-r1" aria-hidden="true"></span>
+  <span class="green-rhombus green-r2" aria-hidden="true"></span>
+  <span class="green-rhombus green-r3" aria-hidden="true"></span>
+
+  <div class="green-inner">
+    <h2 class="green-title serif-it">
+      <a href={localePath(`/carta/${lead.slug}`, locale)}>{lead.name}</a>
+    </h2>
+    <p class="green-body serif-it">{lead.ingredients}</p>
+    <p class="green-meta">№{lead.no} · {lead.price}</p>
+
+    {dishes.length > 1 && (
+      <ul class="green-more">
+        {dishes.slice(1).map((d) => (
+          <li>
+            <a href={localePath(`/carta/${d.slug}`, locale)}>
+              {d.name} <span class="green-more-price">{d.price}</span>
+            </a>
+            {d.vegan && <span class="tag-vegan">{t.carta.vegan}</span>}
+          </li>
+        ))}
+      </ul>
+    )}
+  </div>
+</section>
+
+<style is:global>
+  .green {
+    position: relative; overflow: hidden;
+    background: var(--bg-alt);
+    padding: clamp(80px, 12vw, 130px) var(--pad);
+  }
+
+  .green-rhombus {
+    position: absolute; border: 1px solid var(--red);
+    transform: rotate(45deg); opacity: 0.5; pointer-events: none;
+  }
+  .green-r1 { top: -120px; right: -120px; width: 420px; height: 420px; }
+  .green-r2 { top: -60px;  right: -60px;  width: 300px; height: 300px; }
+  .green-r3 { top: 20px;   right: 20px;   width: 160px; height: 160px; }
+
+  .green-inner { position: relative; max-width: 900px; margin: 0 auto; text-align: center; }
+
+  .green-title {
+    font-size: clamp(42px, 8vw, 126px); line-height: 0.95; color: var(--red);
+  }
+  .green-title a:hover { color: var(--ink); }
+
+  .green-body {
+    margin-top: 22px; font-size: clamp(19px, 2vw, 29px); line-height: 1.5;
+    max-width: 34ch; margin-inline: auto;
+  }
+  .green-meta { margin-top: 28px; font-size: 11px; letter-spacing: 0.3em; }
+
+  .green-more {
+    margin-top: 44px; padding-top: 26px; border-top: 1px solid rgba(10,10,10,0.18);
+    list-style: none; display: flex; justify-content: center; gap: 28px; flex-wrap: wrap;
+    font-size: 12px; letter-spacing: 0.2em; text-transform: uppercase;
+  }
+  .green-more li { display: inline-flex; align-items: center; gap: 10px; }
+  .green-more a:hover { color: var(--red); }
+  .green-more-price { opacity: 0.75; }
+
+  @media (max-width: 640px) {
+    .green-r1, .green-r2 { display: none; }
+  }
+</style>

@@ -1,0 +1,17 @@
+---
+interface Props {
+  label: string;
+  title: string;
+  sub?: string;
+  drip?: boolean;
+  id?: string;
+}
+const { label, title, sub, drip = false, id } = Astro.props;
+---
+
+<section class="chapter" id={id}>
+  {drip && <span class="drip" aria-hidden="true"></span>}
+  <p class="chapter-label">{label}</p>
+  <h2 class="chapter-title">{title}</h2>
+  {sub && <p class="chapter-sub">{sub}</p>}
+</section>

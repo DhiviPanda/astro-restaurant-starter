@@ -1,0 +1,14 @@
+---
+import DishPage from '../../components/DishPage.astro';
+import { getContent } from '../../utils/content.ts';
+import { DEFAULT_LOCALE } from '../../i18n/index.ts';
+
+export async function getStaticPaths() {
+  const { dishes } = await getContent(DEFAULT_LOCALE);
+  return dishes.map((dish) => ({ params: { slug: dish.slug }, props: { dish } }));
+}
+
+const { dish } = Astro.props;
+---
+
+<DishPage locale={DEFAULT_LOCALE} dish={dish} />

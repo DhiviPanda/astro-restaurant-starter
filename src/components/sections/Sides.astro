@@ -1,0 +1,65 @@
+---
+import { localePath, type Locale } from '../../i18n/index.ts';
+import { availableToday, type Dish } from '../../utils/content.ts';
+
+interface Props { dishes: Dish[]; t: any; locale: Locale; }
+const { dishes, t, locale } = Astro.props;
+---
+
+<div class="sides">
+  {dishes.map((d) => (
+    <article class:list={['side', { 'is-off': !availableToday(d) }]}>
+      <div>
+        <p class="side-no">№{d.no}</p>
+        <h3 class="side-name">
+          <a href={localePath(`/carta/${d.slug}`, locale)}>{d.name}</a>
+        </h3>
+        <p class="side-desc serif-it">{d.ingredients}</p>
+      </div>
+      <div class="side-foot">
+        {d.vegan && <span class="tag-vegan">{t.carta.vegan}</span>}
+        <span class="side-price">{d.price}</span>
+      </div>
+    </article>
+  ))}
+</div>
+
+<style is:global>
+  .sides {
+    background: var(--bg);
+    display: grid; grid-template-columns: repeat(3, 1fr);
+    border-bottom: var(--rule);
+  }
+  .side {
+    border-right: var(--rule);
+    padding: clamp(26px, 3vw, 38px) clamp(20px, 2vw, 26px);
+    min-height: 300px;
+    display: flex; flex-direction: column; justify-content: space-between; gap: 22px;
+  }
+  .side:last-child { border-right: none; }
+
+  .side-no { font-size: 11px; letter-spacing: 0.3em; color: var(--red); }
+  .side-name {
+    font-family: var(--display);
+    font-size: clamp(30px, 4.4vw, 74px); line-height: 0.86;
+    margin-top: 10px; text-transform: uppercase;
+  }
+  .side-name a:hover { color: var(--red); }
+  .side-desc { margin-top: 14px; font-size: 18px; line-height: 1.5; max-width: 28ch; }
+
+  .side-foot { display: flex; justify-content: space-between; align-items: center; gap: 12px; }
+  .side-price { font-size: 14px; margin-left: auto; }
+
+  .tag-vegan {
+    border: 1px solid var(--ink); padding: 3px 10px;
+    font-size: 10px; letter-spacing: 0.2em; text-transform: uppercase;
+  }
+
+  .side.is-off { opacity: var(--dim); }
+
+  @media (max-width: 860px) { .sides { grid-template-columns: repeat(2, 1fr); } }
+  @media (max-width: 560px) {
+    .sides { grid-template-columns: 1fr; }
+    .side { border-right: none; border-bottom: var(--rule); min-height: auto; }
+  }
+</style>

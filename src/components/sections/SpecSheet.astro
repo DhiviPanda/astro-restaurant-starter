@@ -1,0 +1,62 @@
+---
+interface Props { t: any; }
+const { t } = Astro.props;
+---
+
+<section class="spec">
+  <div class="spec-box">
+    <div class="spec-main">
+      <p class="spec-label">{t.spec.label}</p>
+      <p class="spec-weight">
+        {t.spec.weight}<span class="spec-unit"> {t.spec.weightUnit}</span>
+      </p>
+      <p class="spec-body serif-it">{t.spec.body}</p>
+    </div>
+
+    <dl class="spec-rows">
+      {t.spec.rows.map((row: any, i: number) => (
+        <div class:list={['spec-row', { 'is-red': i === t.spec.rows.length - 1 }]}>
+          <dt>{row.k}</dt>
+          <dd>{row.v}</dd>
+        </div>
+      ))}
+    </dl>
+  </div>
+</section>
+
+<style is:global>
+  .spec {
+    background: var(--bg-clean);
+    padding: clamp(70px, 10vw, 120px) var(--pad);
+    border-top: var(--rule); border-bottom: var(--rule);
+  }
+  .spec-box {
+    max-width: 1100px; margin: 0 auto;
+    display: grid; grid-template-columns: 1fr 1fr;
+    border: var(--rule);
+  }
+  .spec-main { padding: clamp(32px, 4vw, 56px) clamp(24px, 3vw, 40px); border-right: var(--rule); }
+  .spec-label { font-size: 11px; letter-spacing: 0.4em; text-transform: uppercase; }
+  .spec-weight {
+    font-family: var(--display);
+    font-size: clamp(44px, 6vw, 108px); line-height: 0.86; margin-top: 16px;
+  }
+  .spec-unit { font-size: 0.4em; }
+  .spec-body { margin-top: 20px; font-size: clamp(17px, 1.6vw, 22px); line-height: 1.5; }
+
+  .spec-rows { display: grid; grid-template-rows: repeat(4, 1fr); }
+  .spec-row {
+    display: flex; justify-content: space-between; gap: 16px;
+    padding: 18px clamp(24px, 3vw, 40px);
+    border-bottom: var(--rule);
+    font-size: 11px; letter-spacing: 0.22em; text-transform: uppercase;
+  }
+  .spec-row:last-child { border-bottom: none; }
+  .spec-row.is-red { color: var(--red); }
+  .spec-row dd { text-align: right; }
+
+  @media (max-width: 760px) {
+    .spec-box { grid-template-columns: 1fr; }
+    .spec-main { border-right: none; border-bottom: var(--rule); }
+  }
+</style>

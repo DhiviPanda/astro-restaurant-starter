@@ -1,0 +1,184 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import TopBar from './layout/TopBar.astro';
+import Credits from './layout/Credits.astro';
+import CookieBanner from './ui/CookieBanner.astro';
+import { getContent } from '../utils/content.ts';
+import type { Locale } from '../i18n/index.ts';
+
+interface Props { locale: Locale; }
+const { locale } = Astro.props;
+const { t, producers } = await getContent(locale);
+
+// CHECKPOINT: tu clave de Web3Forms en .env (PUBLIC_WEB3FORMS_KEY)
+const KEY = import.meta.env.PUBLIC_WEB3FORMS_KEY ?? '';
+---
+
+<BaseLayout title={`${t.grupos.title} — ${t.site.name}`} description={t.grupos.body}>
+  <TopBar t={t} locale={locale} />
+
+  <main class="groups">
+    <section class="groups-hero">
+      <span class="scanlines" aria-hidden="true"></span>
+      <p class="groups-label label">{t.grupos.title}</p>
+      <h1 class="groups-claim serif-it" set:html={t.grupos.claim} />
+      <p class="groups-body">{t.grupos.body}</p>
+    </section>
+
+    <dl class="groups-points">
+      {t.grupos.points.map((p: any) => (
+        <div class="gpoint">
+          <dt>{p.k}</dt>
+          <dd>{p.v}</dd>
+        </div>
+      ))}
+    </dl>
+
+    <section class="groups-form-wrap">
+      <h2 class="groups-form-title">{t.grupos.formTitle}</h2>
+
+      <form class="groups-form" id="groups-form" data-key={KEY}>
+        <p class="field">
+          <label for="g-name">{t.grupos.fields.name}</label>
+          <input id="g-name" name="name" type="text" required autocomplete="name" />
+        </p>
+        <p class="field">
+          <label for="g-email">{t.grupos.fields.email}</label>
+          <input id="g-email" name="email" type="email" required autocomplete="email" />
+        </p>
+        <p class="field">
+          <label for="g-phone">{t.grupos.fields.phone}</label>
+          <input id="g-phone" name="phone" type="tel" autocomplete="tel" />
+        </p>
+        <p class="field">
+          <label for="g-people">{t.grupos.fields.people}</label>
+          <input id="g-people" name="people" type="number" min="12" max="30" required />
+        </p>
+        <p class="field">
+          <label for="g-date">{t.grupos.fields.date}</label>
+          <input id="g-date" name="date" type="date" required />
+        </p>
+        <p class="field field-full">
+          <label for="g-msg">{t.grupos.fields.message}</label>
+          <textarea id="g-msg" name="message" rows="4"></textarea>
+        </p>
+
+        <!-- honeypot antispam: fuera del arbol de accesibilidad -->
+        <input type="checkbox" name="botcheck" class="honeypot" tabindex="-1" autocomplete="off" aria-hidden="true" />
+
+        <p class="field field-full">
+          <button type="submit" class="btn btn-red">{t.grupos.cta}</button>
+        </p>
+      </form>
+
+      <p class="groups-msg" id="groups-msg" role="status" aria-live="polite"
+         data-ok={t.grupos.ok} data-error={t.grupos.error}></p>
+    </section>
+  </main>
+
+  <Credits t={t} locale={locale} producers={producers} />
+  <CookieBanner />
+</BaseLayout>
+
+<style is:global>
+  .groups-hero {
+    position: relative; overflow: hidden;
+    padding: clamp(50px, 8vw, 100px) var(--pad) clamp(40px, 6vw, 70px);
+    border-bottom: var(--rule);
+  }
+  .groups-label { color: var(--red); position: relative; }
+  .groups-claim {
+    position: relative; margin-top: 14px;
+    font-size: clamp(44px, 9vw, 130px); line-height: 0.95;
+  }
+  .groups-body {
+    position: relative; margin-top: 24px; max-width: 48ch;
+    font-size: clamp(15px, 1.5vw, 19px); line-height: 1.8;
+  }
+
+  .groups-points {
+    display: grid; grid-template-columns: repeat(auto-fit, minmax(190px, 1fr));
+    border-bottom: var(--rule);
+  }
+  .gpoint {
+    padding: clamp(24px, 3vw, 34px) var(--pad);
+    border-right: var(--rule);
+  }
+  .gpoint:last-child { border-right: none; }
+  .gpoint dt { font-size: 11px; letter-spacing: 0.3em; color: var(--red); text-transform: uppercase; }
+  .gpoint dd {
+    margin-top: 10px; font-family: var(--display);
+    font-size: clamp(20px, 2.4vw, 32px); line-height: 1.05; text-transform: uppercase;
+  }
+
+  .groups-form-wrap {
+    background: var(--bg-clean);
+    padding: clamp(44px, 7vw, 86px) var(--pad);
+  }
+  .groups-form-title {
+    font-family: var(--display); font-size: clamp(36px, 6vw, 80px);
+    line-height: 0.9; text-transform: uppercase; text-align: center;
+  }
+
+  .groups-form {
+    max-width: 720px; margin: 32px auto 0;
+    display: grid; grid-template-columns: 1fr 1fr; gap: 18px;
+  }
+  .field { display: flex; flex-direction: column; gap: 7px; }
+  .field-full { grid-column: 1 / -1; }
+  .field label {
+    font-size: 11px; letter-spacing: 0.22em; text-transform: uppercase; opacity: 0.7;
+  }
+  .groups-form input,
+  .groups-form textarea {
+    border: var(--rule); border-radius: 0; background: transparent;
+    padding: 13px 15px; font-family: var(--mono); font-size: 14px;
+    color: var(--ink); resize: vertical;
+  }
+  .groups-form input:focus,
+  .groups-form textarea:focus { outline: 3px solid var(--red); outline-offset: 2px; }
+
+  .groups-msg {
+    max-width: 720px; margin: 16px auto 0; text-align: center;
+    min-height: 1.4em; font-size: 12px; letter-spacing: 0.2em; text-transform: uppercase;
+  }
+  .groups-msg.is-ok { color: var(--red); }
+
+  @media (max-width: 620px) {
+    .groups-form { grid-template-columns: 1fr; }
+  }
+</style>
+
+<script>
+  const form = document.getElementById('groups-form') as HTMLFormElement | null;
+  const msg = document.getElementById('groups-msg');
+
+  if (form && msg) {
+    form.addEventListener('submit', async (e) => {
+      e.preventDefault();
+      const key = form.dataset.key;
+      msg.className = 'groups-msg';
+
+      if (!key) {
+        console.warn('[BRASA] Falta PUBLIC_WEB3FORMS_KEY en .env — el formulario no envía.');
+        msg.textContent = msg.dataset.error ?? '';
+        return;
+      }
+
+      const data = new FormData(form);
+      data.append('access_key', key);
+      data.append('subject', 'Nueva solicitud de grupo');
+
+      try {
+        const res = await fetch('https://api.web3forms.com/submit', { method: 'POST', body: data });
+        const json = await res.json();
+        if (!json.success) throw new Error('web3forms');
+        msg.textContent = msg.dataset.ok ?? '';
+        msg.classList.add('is-ok');
+        form.reset();
+      } catch {
+        msg.textContent = msg.dataset.error ?? '';
+      }
+    });
+  }
+</script>

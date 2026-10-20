@@ -1,0 +1,13 @@
+<svg width="1200" height="630" xmlns="http://www.w3.org/2000/svg">
+  <rect width="1200" height="630" fill="#f2ede6"/>
+  <g fill="none" stroke="#0a0a0a" stroke-width="1" opacity="0.06">
+    <path d="M0 0 V630 M60 0 V630 M120 0 V630 M180 0 V630 M240 0 V630 M300 0 V630 M360 0 V630 M420 0 V630 M480 0 V630 M540 0 V630 M600 0 V630 M660 0 V630 M720 0 V630 M780 0 V630 M840 0 V630 M900 0 V630 M960 0 V630 M1020 0 V630 M1080 0 V630 M1140 0 V630"/>
+  </g>
+  <text x="600" y="330" font-family="Impact, sans-serif" font-size="230" font-weight="400"
+        fill="#0a0a0a" text-anchor="middle" letter-spacing="-4">BRASA</text>
+  <text x="600" y="400" font-family="Georgia, serif" font-style="italic" font-size="44"
+        fill="#c8001a" text-anchor="middle">Hamburguesa. Punto.</text>
+  <text x="600" y="490" font-family="Courier, monospace" font-size="20"
+        fill="#0a0a0a" text-anchor="middle" letter-spacing="7" opacity="0.65">BARRIO DE SALAMANCA · MADRID</text>
+  <rect x="560" y="530" width="80" height="4" fill="#c8001a"/>
+</svg>

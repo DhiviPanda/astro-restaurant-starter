@@ -1,0 +1,316 @@
+{
+  "site": {
+    "tagline": "Hamburguesa. Punto.",
+    "description": "Hamburguesas a la brasa en el Barrio de Salamanca. Vaca rubia gallega, pan de obrador y fuego. Nada más."
+  },
+  "nav": {
+    "carta": "Carta",
+    "chef": "El chef manda",
+    "grupos": "Grupos",
+    "reservar": "Reservar"
+  },
+  "status": {
+    "open": "Abierto ahora",
+    "closed": "Cerrado",
+    "opensAt": "Abre a las",
+    "closesAt": "Cierra a las",
+    "today": "Hoy"
+  },
+  "hero": {
+    "eyebrow": "Toma 01 — Int. Parrilla. Noche.",
+    "claim": "Hamburguesa.<br />Punto.",
+    "sub": "Carne. Fuego. Pan.<br />Nada más.",
+    "cta": "Reservar",
+    "quote": "No hay segunda oportunidad para una primera hamburguesa.",
+    "scream": "¿Qué vas a pedir?"
+  },
+  "chapters": {
+    "one": {
+      "label": "Capítulo I",
+      "title": "Las carnes",
+      "sub": "Tres cortes. Un fuego. Ninguna excusa."
+    },
+    "two": {
+      "label": "Capítulo II",
+      "title": "Los acompañantes",
+      "sub": "No son guarnición. Son parte."
+    },
+    "three": {
+      "label": "Capítulo III",
+      "title": "El chef manda",
+      "sub": "Sin carta. Sin preguntas."
+    },
+    "four": {
+      "label": "Capítulo IV",
+      "title": "De dónde viene",
+      "sub": "Nombre y apellidos de lo que comes."
+    }
+  },
+  "spec": {
+    "label": "Ficha técnica",
+    "weight": "180",
+    "weightUnit": "gramos",
+    "body": "Vaca rubia gallega. Maduración 45 días. Molida a las 07:00 del mismo día.",
+    "rows": [
+      {
+        "k": "Sellado",
+        "v": "240 °C / 90 s"
+      },
+      {
+        "k": "Pan",
+        "v": "Brioche / 36 h"
+      },
+      {
+        "k": "Queso",
+        "v": "Cheddar 24 m"
+      },
+      {
+        "k": "Punto",
+        "v": "Poco hecha. Confía."
+      }
+    ]
+  },
+  "chef": {
+    "body": "Siete pases. Sin carta. Sin preguntas. Lo que hay esa noche en la cámara y en la parrilla.",
+    "days": "Jueves — Sábado",
+    "seats": "plazas",
+    "cta": "Pídela",
+    "stamp": "Clasificado",
+    "closedToday": "Hoy no hay mesa del chef. Jueves, viernes y sábado."
+  },
+  "lista": {
+    "label": "La lista de la parrilla",
+    "title": "Entérate antes",
+    "body": "Cuando entra una pieza especial o el chef hace algo que no está en carta, lo contamos aquí primero. Cuatro correos al año. Ni uno más.",
+    "placeholder": "tu@correo.com",
+    "cta": "Entrar en la lista",
+    "ok": "Dentro. Te avisamos.",
+    "error": "No ha entrado. Inténtalo otra vez.",
+    "legal": "Solo el email. Nada más. Te borras cuando quieras."
+  },
+  "carta": {
+    "title": "La carta",
+    "table": "Mesa",
+    "serviceNow": "Ahora servimos",
+    "mediodia": "Mediodía",
+    "noche": "Noche",
+    "allDay": "Todo el día",
+    "filterLabel": "¿Alergias?",
+    "filterHelp": "Marca lo que no puedes comer. La carta se reordena.",
+    "clearFilters": "Quitar filtros",
+    "safe": "Apto para ti",
+    "contains": "Contiene",
+    "hidden": "platos ocultos por tus filtros",
+    "notToday": "Hoy no",
+    "availableOn": "Disponible",
+    "vegan": "Vegano",
+    "seasonEnding": "Quedan {n} días",
+    "seasonLast": "Último día",
+    "usual": "Lo de siempre",
+    "usualBody": "Lo pediste la última vez.",
+    "markUsual": "Guardar como lo de siempre",
+    "unmarkUsual": "Quitar",
+    "empty": "Nada encaja con tus filtros. Prueba a quitar alguno.",
+    "categories": {
+      "carnes": "Las carnes",
+      "verdes": "Las verdes",
+      "acompanantes": "Los acompañantes"
+    }
+  },
+  "dish": {
+    "back": "Volver a la carta",
+    "pairing": "Marida con",
+    "producer": "De dónde viene",
+    "allergens": "Alérgenos",
+    "none": "Ninguno",
+    "glass": "copa",
+    "bottle": "botella",
+    "available": "Disponible",
+    "watch": "Ver cómo se hace"
+  },
+  "allergens": {
+    "gluten": "Gluten",
+    "lactosa": "Lactosa",
+    "huevo": "Huevo",
+    "frutos-secos": "Frutos secos",
+    "sesamo": "Sésamo",
+    "soja": "Soja",
+    "mostaza": "Mostaza",
+    "pescado": "Pescado",
+    "crustaceos": "Crustáceos"
+  },
+  "days": {
+    "short": [
+      "D",
+      "L",
+      "M",
+      "X",
+      "J",
+      "V",
+      "S"
+    ],
+    "long": [
+      "Domingo",
+      "Lunes",
+      "Martes",
+      "Miércoles",
+      "Jueves",
+      "Viernes",
+      "Sábado"
+    ]
+  },
+  "grupos": {
+    "title": "Grupos",
+    "claim": "La sala entera.<br />Para vosotros.",
+    "body": "Cenas de empresa, cumpleaños, lo que sea. De 12 a 30 personas. Menú cerrado o carta abierta, lo hablamos.",
+    "points": [
+      {
+        "k": "Aforo",
+        "v": "12 a 30 personas"
+      },
+      {
+        "k": "Privatización",
+        "v": "Sala completa a partir de 24"
+      },
+      {
+        "k": "Menú",
+        "v": "Cerrado o carta abierta"
+      },
+      {
+        "k": "Aviso",
+        "v": "Con 72 h de antelación"
+      }
+    ],
+    "formTitle": "Cuéntanos",
+    "fields": {
+      "name": "Nombre",
+      "email": "Email",
+      "phone": "Teléfono",
+      "people": "Cuántos sois",
+      "date": "Fecha",
+      "message": "Lo que quieras contarnos"
+    },
+    "cta": "Enviar",
+    "ok": "Recibido. Te contestamos hoy mismo.",
+    "error": "No ha salido. Llámanos y lo arreglamos."
+  },
+  "reservar": {
+    "title": "Reservar",
+    "sub": "Pruébala. Confía.",
+    "phone": "Llamar",
+    "online": "Mesa online"
+  },
+  "credits": {
+    "direccion": "Dirección",
+    "parrilla": "Parrilla",
+    "parrillaName": "Andrés Soriano",
+    "carne": "Carne",
+    "pan": "Pan",
+    "end": "Fin · MMXXVI"
+  },
+  "dishes": {
+    "la-castiza": {
+      "name": "La castiza",
+      "line": "180 g · Rubia gallega",
+      "ingredients": "Cheddar de veinticuatro meses, cebolla quemada, pepinillo agrio, salsa de la casa. Nada que explicar.",
+      "story": "La primera que hicimos y la que no vamos a tocar nunca. Cebolla quemada de verdad, no caramelizada. El pepinillo lo corta todo."
+    },
+    "la-roja": {
+      "name": "La roja",
+      "line": "180 g · Pimentón de la Vera",
+      "ingredients": "Chorizo de bellota, piquillo asado, torta del Casar fundida, ajo negro. Pica lo justo para que te acuerdes.",
+      "story": "Nació de una discusión en cocina sobre si el chorizo pinta algo en una hamburguesa. Ganó quien dijo que sí."
+    },
+    "la-doble": {
+      "name": "La doble",
+      "line": "360 g · Dos pisos",
+      "ingredients": "Dos carnes selladas al momento, doble cheddar, cebolla cruda, mostaza. Se come con dos manos y sin hablar.",
+      "story": "No hay técnica. Hay dos carnes. El truco es sellarlas por separado y juntarlas al final para que ninguna se ahogue."
+    },
+    "la-verde": {
+      "name": "La verde",
+      "line": "Berenjena ahumada",
+      "ingredients": "Berenjena ahumada, piquillo, yogur de cabra y menta fría. Suave. Después vuelve el fuego.",
+      "story": "La berenjena pasa por la misma parrilla que la carne. Por eso sabe a esto y no a plato de régimen."
+    },
+    "la-brava": {
+      "name": "La brava",
+      "line": "100 % vegetal",
+      "ingredients": "Garbanzo asado, remolacha, tahini y encurtido rápido. Vegana sin pedir perdón.",
+      "story": "Tardamos ocho meses en que no se deshiciera en la parrilla. El garbanzo asado fue la respuesta."
+    },
+    "la-de-caza": {
+      "name": "La de caza",
+      "line": "Temporada · Venado",
+      "ingredients": "Venado, castaña asada, membrillo y queso azul. Solo mientras dure la temporada.",
+      "story": "Entra en octubre y se va en diciembre. No la pedimos congelada el resto del año, y por eso sabe a lo que sabe."
+    },
+    "patatas-bravas": {
+      "name": "Patatas bravas",
+      "line": "Cortadas a cuchillo",
+      "ingredients": "Dos salsas, una pica.",
+      "story": ""
+    },
+    "batata-brasa": {
+      "name": "Batata a la brasa",
+      "line": "Directa al fuego",
+      "ingredients": "Batata entera, ceniza, aceite y sal gorda.",
+      "story": ""
+    },
+    "zanahoria-asada": {
+      "name": "Zanahoria asada",
+      "line": "Temporada",
+      "ingredients": "Zanahoria de Aranjuez, avellana y yogur.",
+      "story": ""
+    },
+    "croqueta-de-carne": {
+      "name": "Croqueta de carne",
+      "line": "Una sola",
+      "ingredients": "Del guiso del día anterior.",
+      "story": ""
+    },
+    "ensalada-de-tomate": {
+      "name": "Ensalada de tomate",
+      "line": "Temporada",
+      "ingredients": "Tomate, sal, aceite. Ya está.",
+      "story": ""
+    },
+    "aros-de-cebolla": {
+      "name": "Aros de cebolla",
+      "line": "Seis aros",
+      "ingredients": "Cebolla dulce, rebozado de cerveza, sal de ahumado.",
+      "story": ""
+    }
+  },
+  "wines": {
+    "ribera": {
+      "name": "Ribera del Duero",
+      "note": "Tinta fina. Serio sin ponerse pesado."
+    },
+    "mencia": {
+      "name": "Mencía",
+      "note": "Del Bierzo. Fresco, va con todo."
+    },
+    "verdejo": {
+      "name": "Verdejo",
+      "note": "Rueda. Corta la grasa de un tajo."
+    }
+  },
+  "producers": {
+    "la-erilla": {
+      "name": "Finca La Erilla",
+      "place": "Lugo",
+      "note": "Rubia gallega criada en pasto. Nos mandan la pieza entera y la despiezamos aquí."
+    },
+    "huerta-aranjuez": {
+      "name": "Huerta de Aranjuez",
+      "place": "Madrid",
+      "note": "Verdura de temporada a 50 km. Lo que hay es lo que hay, y cambia cada mes."
+    },
+    "obrador-cava-baja": {
+      "name": "Obrador de la Cava Baja",
+      "place": "Madrid",
+      "note": "Brioche de 36 horas de fermentación. Llega cada mañana a las siete."
+    }
+  }
+}

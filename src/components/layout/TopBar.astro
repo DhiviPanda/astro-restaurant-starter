@@ -1,0 +1,51 @@
+---
+import { localePath, getAlternateUrls, type Locale } from '../../i18n/index.ts';
+import { openState } from '../../utils/content.ts';
+
+interface Props {
+  t: any;
+  locale: Locale;
+}
+const { t, locale } = Astro.props;
+
+const { open, slot } = openState();
+const alternates = getAlternateUrls(Astro.url.pathname, locale);
+const labels: Record<Locale, string> = { es: 'ES', en: 'EN', fr: 'FR' };
+---
+
+<div class="topbar">
+  <div class="topbar-group">
+    <a href={localePath('/', locale)} class="topbar-logo">{t.site.name}</a>
+    <span class="is-red">{t.site.district}</span>
+  </div>
+
+  <div class="topbar-group">
+    <a href={localePath('/carta', locale)}>{t.nav.carta}</a>
+    <a href={localePath('/grupos', locale)}>{t.nav.grupos}</a>
+
+    <span class:list={['state', { 'is-open': open }]}>
+      <span class="state-dot" aria-hidden="true"></span>
+      {open ? t.status.open : t.status.closed}
+      {open && slot && <span class="state-until">· {t.status.closesAt} {slot.to}</span>}
+    </span>
+
+    <nav class="lang" aria-label="idioma">
+      {alternates.map(({ locale: l, url, isCurrent }) => (
+        <a href={url} hreflang={l} aria-current={isCurrent ? 'true' : undefined}
+           class:list={['lang-item', { 'is-current': isCurrent }]}>{labels[l]}</a>
+      ))}
+    </nav>
+  </div>
+</div>
+
+<style is:global>
+  .topbar-logo { font-family: var(--display); font-size: 17px; letter-spacing: 0.1em; }
+  .state-until { opacity: 0.75; }
+  .lang { display: flex; gap: 2px; }
+  .lang-item { padding: 2px 5px; opacity: 0.75; }
+  .lang-item:hover { opacity: 1; }
+  .lang-item.is-current { opacity: 1; color: var(--red); }
+  @media (max-width: 720px) {
+    .state-until { display: none; }
+  }
+</style>

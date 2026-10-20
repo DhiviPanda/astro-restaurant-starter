@@ -1,0 +1,316 @@
+{
+  "site": {
+    "tagline": "Burger. Point.",
+    "description": "Burgers à la braise dans le Barrio de Salamanca, Madrid. Bœuf blond de Galice, pain d'artisan et feu. Rien d'autre."
+  },
+  "nav": {
+    "carta": "Carte",
+    "chef": "Le chef décide",
+    "grupos": "Groupes",
+    "reservar": "Réserver"
+  },
+  "status": {
+    "open": "Ouvert",
+    "closed": "Fermé",
+    "opensAt": "Ouvre à",
+    "closesAt": "Ferme à",
+    "today": "Aujourd'hui"
+  },
+  "hero": {
+    "eyebrow": "Prise 01 — Int. Grill. Nuit.",
+    "claim": "Burger.<br />Point.",
+    "sub": "Viande. Feu. Pain.<br />Rien d'autre.",
+    "cta": "Réserver",
+    "quote": "On n'a pas deux fois l'occasion d'un premier burger.",
+    "scream": "Vous prenez quoi ?"
+  },
+  "chapters": {
+    "one": {
+      "label": "Chapitre I",
+      "title": "Les viandes",
+      "sub": "Trois morceaux. Un feu. Aucune excuse."
+    },
+    "two": {
+      "label": "Chapitre II",
+      "title": "Les accompagnements",
+      "sub": "Pas une garniture. Une partie du plat."
+    },
+    "three": {
+      "label": "Chapitre III",
+      "title": "Le chef décide",
+      "sub": "Sans carte. Sans questions."
+    },
+    "four": {
+      "label": "Chapitre IV",
+      "title": "D'où ça vient",
+      "sub": "Ce que vous mangez a un nom."
+    }
+  },
+  "spec": {
+    "label": "Fiche technique",
+    "weight": "180",
+    "weightUnit": "grammes",
+    "body": "Bœuf blond de Galice. Maturation 45 jours. Haché à 07:00 le matin même.",
+    "rows": [
+      {
+        "k": "Saisie",
+        "v": "240 °C / 90 s"
+      },
+      {
+        "k": "Pain",
+        "v": "Brioche / 36 h"
+      },
+      {
+        "k": "Fromage",
+        "v": "Cheddar 24 m"
+      },
+      {
+        "k": "Cuisson",
+        "v": "Saignant. Faites-nous confiance."
+      }
+    ]
+  },
+  "chef": {
+    "body": "Sept services. Sans carte. Sans questions. Ce qu'il y a ce soir-là dans la chambre froide et sur le grill.",
+    "days": "Jeudi — Samedi",
+    "seats": "places",
+    "cta": "Je la prends",
+    "stamp": "Classifié",
+    "closedToday": "Pas de table du chef aujourd'hui. Jeudi, vendredi et samedi."
+  },
+  "lista": {
+    "label": "La liste du grill",
+    "title": "Soyez au courant",
+    "body": "Quand une pièce spéciale arrive ou que le chef fait quelque chose qui n'est pas sur la carte, on le dit ici d'abord. Quatre mails par an. Pas un de plus.",
+    "placeholder": "vous@email.com",
+    "cta": "Rejoindre la liste",
+    "ok": "C'est fait. On vous écrit.",
+    "error": "Ça n'est pas passé. Réessayez.",
+    "legal": "Juste l'email. Rien d'autre. Vous partez quand vous voulez."
+  },
+  "carta": {
+    "title": "La carte",
+    "table": "Table",
+    "serviceNow": "On sert maintenant",
+    "mediodia": "Midi",
+    "noche": "Soir",
+    "allDay": "Toute la journée",
+    "filterLabel": "Allergies ?",
+    "filterHelp": "Cochez ce que vous ne pouvez pas manger. La carte se réorganise.",
+    "clearFilters": "Retirer les filtres",
+    "safe": "Pour vous",
+    "contains": "Contient",
+    "hidden": "plats masqués par vos filtres",
+    "notToday": "Pas aujourd'hui",
+    "availableOn": "Disponible",
+    "vegan": "Végan",
+    "seasonEnding": "{n} jours restants",
+    "seasonLast": "Dernier jour",
+    "usual": "Comme d'habitude",
+    "usualBody": "Vous l'avez pris la dernière fois.",
+    "markUsual": "Garder comme habitude",
+    "unmarkUsual": "Retirer",
+    "empty": "Rien ne correspond à vos filtres. Essayez d'en retirer un.",
+    "categories": {
+      "carnes": "Les viandes",
+      "verdes": "Les vertes",
+      "acompanantes": "Les accompagnements"
+    }
+  },
+  "dish": {
+    "back": "Retour à la carte",
+    "pairing": "S'accorde avec",
+    "producer": "D'où ça vient",
+    "allergens": "Allergènes",
+    "none": "Aucun",
+    "glass": "verre",
+    "bottle": "bouteille",
+    "available": "Disponible",
+    "watch": "Voir la préparation"
+  },
+  "allergens": {
+    "gluten": "Gluten",
+    "lactosa": "Lactose",
+    "huevo": "Œuf",
+    "frutos-secos": "Fruits à coque",
+    "sesamo": "Sésame",
+    "soja": "Soja",
+    "mostaza": "Moutarde",
+    "pescado": "Poisson",
+    "crustaceos": "Crustacés"
+  },
+  "days": {
+    "short": [
+      "D",
+      "L",
+      "M",
+      "M",
+      "J",
+      "V",
+      "S"
+    ],
+    "long": [
+      "Dimanche",
+      "Lundi",
+      "Mardi",
+      "Mercredi",
+      "Jeudi",
+      "Vendredi",
+      "Samedi"
+    ]
+  },
+  "grupos": {
+    "title": "Groupes",
+    "claim": "Toute la salle.<br />Pour vous.",
+    "body": "Dîners d'entreprise, anniversaires, ce que vous voulez. De 12 à 30 personnes. Menu fixe ou carte ouverte, on en parle.",
+    "points": [
+      {
+        "k": "Capacité",
+        "v": "12 à 30 personnes"
+      },
+      {
+        "k": "Privatisation",
+        "v": "Salle entière à partir de 24"
+      },
+      {
+        "k": "Menu",
+        "v": "Fixe ou carte ouverte"
+      },
+      {
+        "k": "Délai",
+        "v": "72 h à l'avance"
+      }
+    ],
+    "formTitle": "Racontez-nous",
+    "fields": {
+      "name": "Nom",
+      "email": "Email",
+      "phone": "Téléphone",
+      "people": "Vous êtes combien",
+      "date": "Date",
+      "message": "Ce que vous voulez nous dire"
+    },
+    "cta": "Envoyer",
+    "ok": "Bien reçu. On répond aujourd'hui.",
+    "error": "Ça n'est pas parti. Appelez-nous, on arrange ça."
+  },
+  "reservar": {
+    "title": "Réserver",
+    "sub": "Goûtez. Faites confiance.",
+    "phone": "Appeler",
+    "online": "Table en ligne"
+  },
+  "credits": {
+    "direccion": "Adresse",
+    "parrilla": "Grill",
+    "parrillaName": "Andrés Soriano",
+    "carne": "Viande",
+    "pan": "Pain",
+    "end": "Fin · MMXXVI"
+  },
+  "dishes": {
+    "la-castiza": {
+      "name": "La castiza",
+      "line": "180 g · Blonde de Galice",
+      "ingredients": "Cheddar vingt-quatre mois, oignon brûlé, cornichon acide, sauce maison. Rien à expliquer.",
+      "story": "La première qu'on a faite et celle qu'on ne touchera jamais. De l'oignon vraiment brûlé, pas caramélisé. Le cornichon tranche tout."
+    },
+    "la-roja": {
+      "name": "La rouge",
+      "line": "180 g · Paprika fumé",
+      "ingredients": "Chorizo de bellota, piquillo rôti, Torta del Casar fondue, ail noir. Juste assez relevé pour s'en souvenir.",
+      "story": "Née d'une dispute en cuisine sur la place du chorizo dans un burger. Ceux qui ont dit oui ont gagné."
+    },
+    "la-doble": {
+      "name": "La double",
+      "line": "360 g · Deux étages",
+      "ingredients": "Deux viandes saisies minute, double cheddar, oignon cru, moutarde. Deux mains, sans parler.",
+      "story": "Il n'y a pas de technique. Il y a deux viandes. L'astuce est de les saisir séparément et de les réunir à la fin."
+    },
+    "la-verde": {
+      "name": "La verte",
+      "line": "Aubergine fumée",
+      "ingredients": "Aubergine fumée, piquillo, yaourt de chèvre et menthe froide. Douce. Puis le feu revient.",
+      "story": "L'aubergine passe sur le même grill que la viande. C'est pour ça qu'elle a ce goût-là et pas celui d'une assiette de régime."
+    },
+    "la-brava": {
+      "name": "La brave",
+      "line": "100 % végétal",
+      "ingredients": "Pois chiche rôti, betterave, tahini et pickles rapides. Végane sans s'excuser.",
+      "story": "Il nous a fallu huit mois pour qu'elle ne se défasse plus sur le grill. Rôtir les pois chiches était la réponse."
+    },
+    "la-de-caza": {
+      "name": "La chasse",
+      "line": "Saison · Cerf",
+      "ingredients": "Cerf, châtaigne rôtie, coing et bleu. Seulement pendant la saison.",
+      "story": "Elle arrive en octobre et part en décembre. On ne la commande pas congelée le reste de l'année, et c'est pour ça qu'elle a ce goût."
+    },
+    "patatas-bravas": {
+      "name": "Patatas bravas",
+      "line": "Coupées au couteau",
+      "ingredients": "Deux sauces, une qui pique.",
+      "story": ""
+    },
+    "batata-brasa": {
+      "name": "Patate douce à la braise",
+      "line": "Directement au feu",
+      "ingredients": "Patate douce entière, cendre, huile et gros sel.",
+      "story": ""
+    },
+    "zanahoria-asada": {
+      "name": "Carotte rôtie",
+      "line": "Saison",
+      "ingredients": "Carotte d'Aranjuez, noisette et yaourt.",
+      "story": ""
+    },
+    "croqueta-de-carne": {
+      "name": "Croquette de viande",
+      "line": "Une seule",
+      "ingredients": "Du ragoût de la veille.",
+      "story": ""
+    },
+    "ensalada-de-tomate": {
+      "name": "Salade de tomate",
+      "line": "Saison",
+      "ingredients": "Tomate, sel, huile. C'est tout.",
+      "story": ""
+    },
+    "aros-de-cebolla": {
+      "name": "Rondelles d'oignon",
+      "line": "Six rondelles",
+      "ingredients": "Oignon doux, pâte à la bière, sel fumé.",
+      "story": ""
+    }
+  },
+  "wines": {
+    "ribera": {
+      "name": "Ribera del Duero",
+      "note": "Tinta fina. Sérieux sans être lourd."
+    },
+    "mencia": {
+      "name": "Mencía",
+      "note": "Du Bierzo. Frais, va avec tout."
+    },
+    "verdejo": {
+      "name": "Verdejo",
+      "note": "Rueda. Coupe le gras net."
+    }
+  },
+  "producers": {
+    "la-erilla": {
+      "name": "Finca La Erilla",
+      "place": "Lugo",
+      "note": "Blonde de Galice élevée au pâturage. Ils envoient la bête entière et on la découpe ici."
+    },
+    "huerta-aranjuez": {
+      "name": "Huerta de Aranjuez",
+      "place": "Madrid",
+      "note": "Légumes de saison à 50 km. Ce qu'il y a, c'est ce qu'il y a, et ça change chaque mois."
+    },
+    "obrador-cava-baja": {
+      "name": "Obrador de la Cava Baja",
+      "place": "Madrid",
+      "note": "Brioche fermentée 36 heures. Elle arrive chaque matin à sept heures."
+    }
+  }
+}

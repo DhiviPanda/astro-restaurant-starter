@@ -1,0 +1,108 @@
+---
+import { localePath, type Locale } from '../../i18n/index.ts';
+import { chefTableToday } from '../../utils/content.ts';
+import { Image } from 'astro:assets';
+import { asset, ANCHOS, SIZES, CALIDAD } from '../../utils/images.ts';
+import catalog from '../../data/catalog.json';
+
+interface Props { t: any; locale: Locale; chefTable: any; }
+const { t, locale, chefTable } = Astro.props;
+const onToday = chefTableToday();
+
+const chefImg = asset(catalog.images.chefTable.img);
+---
+
+<section class="chef" id="chef">
+  <div class="chef-lines" aria-hidden="true"></div>
+
+  <div class="chef-grid">
+    <div>
+      <p class="chef-label">{t.chapters.three.label}</p>
+      <h2 class="chef-title">{t.chapters.three.title}</h2>
+      <p class="chef-body serif-it">{t.chef.body}</p>
+
+      <ul class="chef-meta">
+        <li>{t.chef.days}</li>
+        <li>{chefTable.time}</li>
+        <li class="is-red">{chefTable.seats} {t.chef.seats}</li>
+        <li>{chefTable.price}</li>
+      </ul>
+
+      {onToday
+        ? <a href={localePath('/#reservar', locale)} class="btn btn-yellow chef-cta">{t.chef.cta}</a>
+        : <p class="chef-closed">{t.chef.closedToday}</p>
+      }
+    </div>
+
+    <figure class="chef-shot">
+      <Image
+        src={chefImg}
+        widths={[...ANCHOS.retrato]}
+        sizes={SIZES.retrato}
+        quality={CALIDAD}
+        alt="" loading="lazy" decoding="async"
+      />
+      <figcaption class="chef-stamp">{t.chef.stamp}</figcaption>
+    </figure>
+  </div>
+</section>
+
+<style is:global>
+  .chef {
+    position: relative; overflow: hidden;
+    background: var(--ink); color: var(--paper);
+    padding: clamp(70px, 10vw, 120px) var(--pad) clamp(80px, 11vw, 140px);
+  }
+  .chef-lines {
+    position: absolute; inset: 0; opacity: 0.35; pointer-events: none;
+    background-image: repeating-linear-gradient(0deg, rgba(242,237,230,0.14) 0 1px, transparent 1px 5px);
+  }
+  .chef-grid {
+    position: relative; max-width: 1400px; margin: 0 auto;
+    display: grid; grid-template-columns: 1fr minmax(260px, 32vw);
+    gap: clamp(32px, 5vw, 50px); align-items: start;
+  }
+
+  .chef-label { font-size: 12px; letter-spacing: 0.4em; color: var(--yellow); text-transform: uppercase; }
+  .chef-title {
+    font-family: var(--display);
+    font-size: clamp(52px, 12vw, 200px); line-height: 0.84; margin-top: 10px;
+    text-transform: uppercase;
+  }
+  .chef-body {
+    margin-top: 26px; font-size: clamp(18px, 1.8vw, 29px);
+    line-height: 1.5; max-width: 36ch;
+  }
+
+  .chef-meta {
+    margin-top: 32px; list-style: none;
+    display: flex; gap: 30px; flex-wrap: wrap;
+    font-size: 11px; letter-spacing: 0.24em; text-transform: uppercase;
+  }
+  .chef-meta .is-red { color: var(--red-dark); }
+
+  .chef-cta { margin-top: 30px; }
+  .chef-closed {
+    margin-top: 30px; border: 1px solid rgba(242,237,230,0.35);
+    display: inline-block; padding: 14px 24px;
+    font-size: 11px; letter-spacing: 0.2em; text-transform: uppercase;
+  }
+
+  .chef-shot { position: relative; aspect-ratio: 4 / 5; overflow: hidden; background: #141414; }
+  .chef-shot img {
+    width: 100%; height: 100%; object-fit: cover;
+    filter: grayscale(1) contrast(1.55) brightness(0.95);
+  }
+  .chef-stamp {
+    position: absolute; bottom: 8%; left: -3%;
+    border: 4px solid var(--red-dark); color: var(--red-dark);
+    padding: 10px 22px; font-size: clamp(16px, 2.2vw, 36px);
+    letter-spacing: 0.2em; text-transform: uppercase;
+    transform: rotate(-9deg);
+  }
+
+  @media (max-width: 860px) {
+    .chef-grid { grid-template-columns: 1fr; }
+    .chef-shot { max-width: 420px; }
+  }
+</style>

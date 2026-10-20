@@ -1,0 +1,316 @@
+{
+  "site": {
+    "tagline": "Burger. Full stop.",
+    "description": "Flame-grilled burgers in Barrio de Salamanca, Madrid. Galician blonde beef, bakery bread and fire. Nothing else."
+  },
+  "nav": {
+    "carta": "Menu",
+    "chef": "Chef's call",
+    "grupos": "Groups",
+    "reservar": "Book"
+  },
+  "status": {
+    "open": "Open now",
+    "closed": "Closed",
+    "opensAt": "Opens at",
+    "closesAt": "Closes at",
+    "today": "Today"
+  },
+  "hero": {
+    "eyebrow": "Take 01 — Int. Grill. Night.",
+    "claim": "Burger.<br />Full stop.",
+    "sub": "Beef. Fire. Bread.<br />Nothing else.",
+    "cta": "Book a table",
+    "quote": "There is no second chance at a first burger.",
+    "scream": "What are you having?"
+  },
+  "chapters": {
+    "one": {
+      "label": "Chapter I",
+      "title": "The beef",
+      "sub": "Three cuts. One fire. No excuses."
+    },
+    "two": {
+      "label": "Chapter II",
+      "title": "The sides",
+      "sub": "Not garnish. Part of it."
+    },
+    "three": {
+      "label": "Chapter III",
+      "title": "Chef's call",
+      "sub": "No menu. No questions."
+    },
+    "four": {
+      "label": "Chapter IV",
+      "title": "Where it comes from",
+      "sub": "Your food has a name and surname."
+    }
+  },
+  "spec": {
+    "label": "Technical sheet",
+    "weight": "180",
+    "weightUnit": "grams",
+    "body": "Galician blonde beef. Aged 45 days. Ground at 07:00 the same morning.",
+    "rows": [
+      {
+        "k": "Sear",
+        "v": "240 °C / 90 s"
+      },
+      {
+        "k": "Bread",
+        "v": "Brioche / 36 h"
+      },
+      {
+        "k": "Cheese",
+        "v": "Cheddar 24 m"
+      },
+      {
+        "k": "Doneness",
+        "v": "Rare. Trust us."
+      }
+    ]
+  },
+  "chef": {
+    "body": "Seven courses. No menu. No questions. Whatever is in the fridge and on the grill that night.",
+    "days": "Thursday — Saturday",
+    "seats": "seats",
+    "cta": "Take it",
+    "stamp": "Classified",
+    "closedToday": "No chef's table today. Thursday, Friday and Saturday."
+  },
+  "lista": {
+    "label": "The grill list",
+    "title": "Know first",
+    "body": "When a special cut comes in, or the chef makes something that isn't on the menu, we tell this list first. Four emails a year. Not one more.",
+    "placeholder": "you@email.com",
+    "cta": "Join the list",
+    "ok": "You're in. We'll be in touch.",
+    "error": "That didn't go through. Try again.",
+    "legal": "Just the email. Nothing else. Leave whenever you want."
+  },
+  "carta": {
+    "title": "The menu",
+    "table": "Table",
+    "serviceNow": "Serving now",
+    "mediodia": "Lunch",
+    "noche": "Dinner",
+    "allDay": "All day",
+    "filterLabel": "Allergies?",
+    "filterHelp": "Tick what you can't eat. The menu reorders itself.",
+    "clearFilters": "Clear filters",
+    "safe": "Safe for you",
+    "contains": "Contains",
+    "hidden": "dishes hidden by your filters",
+    "notToday": "Not today",
+    "availableOn": "Available",
+    "vegan": "Vegan",
+    "seasonEnding": "{n} days left",
+    "seasonLast": "Last day",
+    "usual": "Your usual",
+    "usualBody": "You had it last time.",
+    "markUsual": "Save as my usual",
+    "unmarkUsual": "Remove",
+    "empty": "Nothing matches your filters. Try removing one.",
+    "categories": {
+      "carnes": "The beef",
+      "verdes": "The greens",
+      "acompanantes": "The sides"
+    }
+  },
+  "dish": {
+    "back": "Back to the menu",
+    "pairing": "Pairs with",
+    "producer": "Where it comes from",
+    "allergens": "Allergens",
+    "none": "None",
+    "glass": "glass",
+    "bottle": "bottle",
+    "available": "Available",
+    "watch": "See how it's made"
+  },
+  "allergens": {
+    "gluten": "Gluten",
+    "lactosa": "Dairy",
+    "huevo": "Egg",
+    "frutos-secos": "Tree nuts",
+    "sesamo": "Sesame",
+    "soja": "Soy",
+    "mostaza": "Mustard",
+    "pescado": "Fish",
+    "crustaceos": "Shellfish"
+  },
+  "days": {
+    "short": [
+      "S",
+      "M",
+      "T",
+      "W",
+      "T",
+      "F",
+      "S"
+    ],
+    "long": [
+      "Sunday",
+      "Monday",
+      "Tuesday",
+      "Wednesday",
+      "Thursday",
+      "Friday",
+      "Saturday"
+    ]
+  },
+  "grupos": {
+    "title": "Groups",
+    "claim": "The whole room.<br />Yours.",
+    "body": "Company dinners, birthdays, whatever it is. From 12 to 30 people. Set menu or open menu, we'll talk it through.",
+    "points": [
+      {
+        "k": "Capacity",
+        "v": "12 to 30 people"
+      },
+      {
+        "k": "Private hire",
+        "v": "Full room from 24"
+      },
+      {
+        "k": "Menu",
+        "v": "Set or open"
+      },
+      {
+        "k": "Notice",
+        "v": "72 hours ahead"
+      }
+    ],
+    "formTitle": "Tell us",
+    "fields": {
+      "name": "Name",
+      "email": "Email",
+      "phone": "Phone",
+      "people": "How many of you",
+      "date": "Date",
+      "message": "Anything you want to tell us"
+    },
+    "cta": "Send",
+    "ok": "Got it. We'll reply today.",
+    "error": "That didn't go through. Call us and we'll sort it."
+  },
+  "reservar": {
+    "title": "Book",
+    "sub": "Try it. Trust us.",
+    "phone": "Call",
+    "online": "Book online"
+  },
+  "credits": {
+    "direccion": "Address",
+    "parrilla": "Grill",
+    "parrillaName": "Andrés Soriano",
+    "carne": "Beef",
+    "pan": "Bread",
+    "end": "The end · MMXXVI"
+  },
+  "dishes": {
+    "la-castiza": {
+      "name": "The classic",
+      "line": "180 g · Galician blonde",
+      "ingredients": "Twenty-four month cheddar, burnt onion, sour pickle, house sauce. Nothing to explain.",
+      "story": "The first one we made and the one we will never touch. Properly burnt onion, not caramelised. The pickle cuts through all of it."
+    },
+    "la-roja": {
+      "name": "The red one",
+      "line": "180 g · Smoked paprika",
+      "ingredients": "Acorn-fed chorizo, roast piquillo, melted Torta del Casar, black garlic. Hot enough to remember.",
+      "story": "It came out of a kitchen argument about whether chorizo belongs in a burger. The side that said yes won."
+    },
+    "la-doble": {
+      "name": "The double",
+      "line": "360 g · Two storeys",
+      "ingredients": "Two patties seared to order, double cheddar, raw onion, mustard. Two hands, no talking.",
+      "story": "There is no technique. There are two patties. The trick is searing them apart and joining them at the end so neither one drowns."
+    },
+    "la-verde": {
+      "name": "The green one",
+      "line": "Smoked aubergine",
+      "ingredients": "Smoked aubergine, piquillo pepper, goat yoghurt and cold mint. Gentle. Then the fire comes back.",
+      "story": "The aubergine goes on the same grill as the beef. That's why it tastes like this and not like a diet plate."
+    },
+    "la-brava": {
+      "name": "The bold one",
+      "line": "100 % plants",
+      "ingredients": "Roast chickpea, beetroot, tahini and quick pickle. Vegan without apologising.",
+      "story": "It took us eight months to stop it falling apart on the grill. Roasting the chickpeas was the answer."
+    },
+    "la-de-caza": {
+      "name": "The game one",
+      "line": "Seasonal · Venison",
+      "ingredients": "Venison, roast chestnut, quince and blue cheese. Only while the season lasts.",
+      "story": "It arrives in October and leaves in December. We don't order it frozen the rest of the year, and that's why it tastes the way it does."
+    },
+    "patatas-bravas": {
+      "name": "Bravas potatoes",
+      "line": "Hand cut",
+      "ingredients": "Two sauces, one of them bites.",
+      "story": ""
+    },
+    "batata-brasa": {
+      "name": "Flame-grilled sweet potato",
+      "line": "Straight into the fire",
+      "ingredients": "Whole sweet potato, ash, oil and coarse salt.",
+      "story": ""
+    },
+    "zanahoria-asada": {
+      "name": "Roast carrot",
+      "line": "Seasonal",
+      "ingredients": "Aranjuez carrot, hazelnut and yoghurt.",
+      "story": ""
+    },
+    "croqueta-de-carne": {
+      "name": "Beef croquette",
+      "line": "Just the one",
+      "ingredients": "Made from yesterday's stew.",
+      "story": ""
+    },
+    "ensalada-de-tomate": {
+      "name": "Tomato salad",
+      "line": "Seasonal",
+      "ingredients": "Tomato, salt, oil. That's it.",
+      "story": ""
+    },
+    "aros-de-cebolla": {
+      "name": "Onion rings",
+      "line": "Six rings",
+      "ingredients": "Sweet onion, beer batter, smoked salt.",
+      "story": ""
+    }
+  },
+  "wines": {
+    "ribera": {
+      "name": "Ribera del Duero",
+      "note": "Tinta fina. Serious without being heavy."
+    },
+    "mencia": {
+      "name": "Mencía",
+      "note": "From Bierzo. Fresh, goes with everything."
+    },
+    "verdejo": {
+      "name": "Verdejo",
+      "note": "Rueda. Cuts straight through the fat."
+    }
+  },
+  "producers": {
+    "la-erilla": {
+      "name": "Finca La Erilla",
+      "place": "Lugo",
+      "note": "Pasture-raised Galician blonde. They send the whole animal and we butcher it here."
+    },
+    "huerta-aranjuez": {
+      "name": "Huerta de Aranjuez",
+      "place": "Madrid",
+      "note": "Seasonal vegetables from 50 km away. What there is, is what there is, and it changes every month."
+    },
+    "obrador-cava-baja": {
+      "name": "Obrador de la Cava Baja",
+      "place": "Madrid",
+      "note": "Brioche fermented for 36 hours. It arrives every morning at seven."
+    }
+  }
+}

@@ -1,0 +1,24 @@
+---
+import DishPage from '../../../components/DishPage.astro';
+import { getContent } from '../../../utils/content.ts';
+import { LOCALES, DEFAULT_LOCALE, isValidLocale, type Locale } from '../../../i18n/index.ts';
+
+export async function getStaticPaths() {
+  const langs = LOCALES.filter((l) => l !== DEFAULT_LOCALE);
+  const paths = [];
+
+  for (const lang of langs) {
+    const { dishes } = await getContent(lang);
+    for (const dish of dishes) {
+      paths.push({ params: { lang, slug: dish.slug }, props: { dish } });
+    }
+  }
+  return paths;
+}
+
+const { lang } = Astro.params;
+const { dish } = Astro.props;
+const locale: Locale = isValidLocale(lang) ? lang : DEFAULT_LOCALE;
+---
+
+<DishPage locale={locale} dish={dish} />
