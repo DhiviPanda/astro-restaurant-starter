@@ -28,8 +28,7 @@ La mayoría de cartas digitales son un PDF con peor experiencia. Esta decide qu�
 | **Disponibilidad por días** | Un plato solo se ofrece los días marcados en el catálogo | El encargado, una vez por temporada |
 | **Temporada con cuenta atrás** | "Quedan 9 días" aparece solo en los últimos 21 días | Nadie: fechas en el catálogo |
 | **Filtros de alérgenos** | Marcas lo que no puedes comer y la carta se reordena sola | Nadie |
-| **Lo de siempre** | Recuerda el plato que marcaste a mano o lo deduce de tus últimas visitas, sin registro ni cuenta | Nadie: `localStorage` |
-| **Memoria opt-in** | El historial de visitas solo se activa si el comensal lo enciende. Al apagarlo, se borra todo | El comensal |
+| **Lo de siempre** | Recuerda el plato que marcaste, sin registro | Nadie: `localStorage` |
 | **Maridaje** | Cada plato sugiere su vino, con copa y botella | El encargado, al cambiar carta |
 | **Productor** | Quién cultivó o crió lo que estás comiendo | El encargado, al cambiar proveedor |
 | **Abierto / cerrado** | La barra superior lo calcula con la hora y el día | Nadie |
@@ -214,21 +213,7 @@ Se atenúan en lugar de ocultarse a propósito: alguien con intolerancia leve qu
 
 ### Lo de siempre
 
-Dos formas de llegar al mismo resultado, sin cuenta ni registro:
-
-**Declarado.** En la ficha de cada plato hay un botón para marcarlo. Gana siempre sobre cualquier otra lógica.
-
-**Deducido.** Si el comensal activa la memoria en la carta, el starter registra qué fichas visita y en cuántas sesiones distintas. A partir de dos visitas al mismo plato en sesiones separadas, ese plato sube arriba con el texto "Lo hemos deducido de tus últimas visitas."
-
-En ambos casos: si ese plato choca con un filtro de alérgenos activo o no se sirve hoy, el bloque desaparece. Nunca se anuncia arriba algo que el comensal no puede comer.
-
-Todo vive en `localStorage` del navegador. Cambias de móvil, usas incógnito o borras datos y empieza de cero. Eso está escrito en la propia carta, no solo en este README.
-
-**Claves que usa:**
-- `brasa_v1_memoria` — opt-in activo/inactivo
-- `brasa_v1_historial` — visitas por sesión
-- `brasa_usual` — plato declarado a mano
-- `brasa_allergens` — alérgenos marcados
+En la ficha de cada plato hay un botón para guardarlo. La próxima vez que esa persona abra la carta, aparece arriba. Sin cuenta, sin registro, sin datos personales: solo un `slug` en `localStorage` del propio navegador.
 
 ### Lista de la parrilla
 

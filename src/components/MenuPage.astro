@@ -49,9 +49,7 @@ const clientDishes = dishes.map((d) => ({
     <section class="usual" id="usual" hidden>
       <p class="usual-label label">{t.carta.usual}</p>
       <a class="usual-link" id="usual-link" href="#"></a>
-      <p class="usual-body serif-it"
-         data-manual={t.carta.usualBody}
-         data-auto={t.carta.usualAuto}>{t.carta.usualBody}</p>
+      <p class="usual-body serif-it">{t.carta.usualBody}</p>
     </section>
 
     <!-- Filtros de alergenos: la unica isla con JS real -->
@@ -74,17 +72,6 @@ const clientDishes = dishes.map((d) => ({
         </button>
         <p class="filters-count" id="filters-count" role="status" aria-live="polite"
            data-hidden={t.carta.hidden}></p>
-      </div>
-
-      <div class="memoria">
-        <label class="memoria__toggle">
-          <input type="checkbox" data-memoria-toggle />
-          <span>{t.carta.memoriaActivar}</span>
-        </label>
-        <p class="memoria__limite">{t.carta.memoriaLimite}</p>
-        <button type="button" class="memoria__olvidar" data-memoria-olvidar hidden>
-          {t.carta.memoriaOlvidar}
-        </button>
       </div>
     </section>
 
@@ -207,28 +194,6 @@ const clientDishes = dishes.map((d) => ({
   .filters-clear:hover { color: var(--red); border-color: var(--red); }
   .filters-count { font-size: 11px; letter-spacing: 0.14em; opacity: 0.75; }
 
-  /* Memoria: el opt-in vive junto a los filtros porque es la misma
-     zona de preferencias del comensal. Lo que no se declara aqui
-     no se guarda: el historial solo corre si esta casilla esta puesta. */
-  .memoria {
-    margin-top: 20px; padding-top: 18px;
-    border-top: 1px solid rgba(10,10,10,0.12);
-  }
-  .memoria__toggle {
-    display: inline-flex; align-items: center; gap: 10px; cursor: pointer;
-    font-size: 12px; letter-spacing: 0.12em;
-  }
-  .memoria__toggle input { width: 18px; height: 18px; accent-color: var(--red); cursor: pointer; }
-  .memoria__toggle input:focus-visible { outline: 3px solid var(--red); outline-offset: 2px; }
-  .memoria__limite { margin-top: 8px; font-size: 11px; opacity: 0.75; line-height: 1.6; max-width: 56ch; }
-  .memoria__olvidar {
-    margin-top: 10px; font-size: 11px; letter-spacing: 0.2em; text-transform: uppercase;
-    border-bottom: 1px solid var(--ink); padding-bottom: 2px;
-  }
-  .memoria__olvidar:hover { color: var(--red); border-color: var(--red); }
-  .memoria__olvidar[hidden] { display: none; }
-  [data-sin-soporte] { opacity: 0.5; cursor: not-allowed; }
-
   /* Lista */
   .menu-group { border-bottom: var(--rule); }
   .menu-group[hidden] { display: none; }
@@ -297,8 +262,6 @@ const clientDishes = dishes.map((d) => ({
 </style>
 
 <script>
-  import { memoria, pintarUsual, iniciarControles } from '../scripts/memoria-carta.js';
-
   type ClientDish = {
     slug: string;
     allergens: string[];
@@ -402,10 +365,6 @@ const clientDishes = dishes.map((d) => ({
       if (emptyEl) emptyEl.hidden = visible > 0;
 
       safeSet(STORAGE_KEY, JSON.stringify(active));
-
-      // El plato de siempre depende del filtro: si choca con un
-      // alergeno marcado, el bloque de arriba desaparece.
-      pintarUsual(root!);
     }
 
     // Restaura lo que marcó la última vez
@@ -423,8 +382,18 @@ const clientDishes = dishes.map((d) => ({
     });
     apply();
 
-    /* ── 4. Lo de siempre: marcado a mano o deducido del historial ── */
-    iniciarControles(root, () => pintarUsual(root));
-    pintarUsual(root);
+    /* ── 4. Lo de siempre ── */
+    const usualSlug = safeGet('brasa_usual');
+    if (usualSlug) {
+      const link = document.querySelector<HTMLAnchorElement>(`.item[data-slug="${usualSlug}"] .item-link`);
+      const name = link?.querySelector('.item-name')?.textContent;
+      const box = document.getElementById('usual');
+      const out = document.getElementById('usual-link') as HTMLAnchorElement | null;
+      if (link && name && box && out) {
+        out.textContent = name;
+        out.href = link.href;
+        box.hidden = false;
+      }
+    }
   }
 </script>
