@@ -263,26 +263,24 @@ const schema = {
 </style>
 
 <script>
+  import { memoria, usualManual, alternarUsual } from '../scripts/memoria-carta.js';
+
   const btn = document.getElementById('dish-usual') as HTMLButtonElement | null;
   if (btn) {
     const slug = btn.dataset.slug!;
-    const read = () => { try { return localStorage.getItem('brasa_usual'); } catch { return null; } };
+
+    // Visitar la ficha es la señal de interés. Solo cuenta si la memoria está activa.
+    memoria.registrar(slug);
 
     const paint = () => {
-      const on = read() === slug;
+      const on = usualManual() === slug;
       btn.textContent = on ? btn.dataset.unmark! : btn.dataset.mark!;
       btn.classList.toggle('is-on', on);
       btn.setAttribute('aria-pressed', String(on));
     };
 
-    btn.addEventListener('click', () => {
-      try {
-        if (read() === slug) localStorage.removeItem('brasa_usual');
-        else localStorage.setItem('brasa_usual', slug);
-      } catch {}
-      paint();
-    });
-
+    btn.addEventListener('click', () => alternarUsual(slug));
+    document.addEventListener(memoria.EVENTO, paint);
     paint();
   }
 </script>
